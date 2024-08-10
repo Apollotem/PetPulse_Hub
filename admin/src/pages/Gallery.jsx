@@ -22,7 +22,7 @@ const Gallery = () => {
     return (
         <div className="content-div">
             <div className="card-header">
-                <div className="card-headding">Gallery
+                <div className="card-headding main-menu-headding">Gallery
                     <p className="errorMessage">{alertMessage}</p>
                 </div>
             </div>

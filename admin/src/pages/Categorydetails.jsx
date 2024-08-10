@@ -66,7 +66,7 @@ export const Categorydetails = () => {
         <div className={visibility ? "flat-container" : "content-div"}>
             <ToastContainer />
             <div className="card-header">
-                <div className="card-headding">Category</div>
+                <div className="card-headding main-menu-headding">Category</div>
                 {/* <div className="errorMessage">{alertMessage}</div> */}
                 <div className="top-button">
                     <Link to="/addcategory"> <button className="btn-primary"> +Add</button></Link>
@@ -187,7 +187,7 @@ export const Categorydetails = () => {
 // import { ToastContainer, toast } from 'react-toastify';
 // import 'react-toastify/dist/ReactToastify.css';
 
-const AddCategory = () => {
+export const AddCategory = () => {
     const maincategory = useRef('');
     const category = useRef('');
     const subcategory = useRef('');
@@ -294,4 +294,3 @@ const AddCategory = () => {
     );
 };
 
-export default AddCategory;

@@ -13,7 +13,7 @@ const Caretaker = () => {
     return (
         <div className="flat-container content-div">
             <div className="card-header">
-                <div className="card-headding">Caretaking Services</div>
+                <div className="card-headding main-menu-headding">Caretaking Services</div>
             </div>
             <div className="">
                 <table className="table-container table">

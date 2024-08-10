@@ -51,7 +51,7 @@ const Blogs = () => {
         <div className={visibility ? "flat-container" : "content-div"}>
             <ToastContainer />
             <div className="card-header">
-                <div className="card-headding">Blogs
+                <div className="card-headding main-menu-headding">Blogs
                     {/* <p className="errorMessage">{alertMessage}</p> */}
                 </div>
                 <div className="top-button">

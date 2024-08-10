@@ -50,7 +50,7 @@ const Product = () => {
    
         <div className={visibility?"flat-container":"content-div"} > 
         <div className="card-header">
-            <div className="card-headding">Product Details</div>
+            <div className="card-headding main-menu-headding">Product Details</div>
             <div className="top-button">
                 {
                     <Link to="/addproduct"> <button className="btn-primary"> +Add</button></Link>

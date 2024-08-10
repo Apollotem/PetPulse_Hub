@@ -158,7 +158,7 @@ const Order = () => {
     return (
         <div className={visibility ? "flat-container" : "content-div"}>
             <div className="card-header">
-                <div className="card-headding">Order Details</div>
+                <div className="card-headding main-menu-headding">Order Details</div>
                 <div className="top-button"></div>
             </div>
             <table className="table-container table">
