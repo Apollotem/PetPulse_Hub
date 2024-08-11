@@ -89,7 +89,7 @@ export const getAddress = async (req, res) => {
 }
 
 export const storeCaretaking=async(req,res)=>{
-    const { userId,type,owner_name,phone_no,alt_phone_no,hostel,pickup,deliver,use } = req.body;
+    const { userId,type,owner_name,phone_no,alt_phone_no,hostel,pickup,deliver,use,address } = req.body;
     const proof = req.file.filename;
 
     let caretakingData = new Caretaking({
@@ -102,7 +102,8 @@ export const storeCaretaking=async(req,res)=>{
         hostel,
         pickup,
         deliver,
-        address
+        address,
+        status:"Applied"
     });
     try {
         await caretakingData.save();
@@ -119,9 +120,9 @@ export const getCaretakingService=async(req,res)=>{
     } catch (error) {
         return res.status(404).json({ status: "failed", message: `Something went wrong: ${error}`, data: [] });
     }
-    if (careTakingList.length === 0) {
-        return res.status(200).json({ status: "failed", message: "caretaking list empty", data:[] });
-    }
+    // if (careTakingList.length === 0) {
+    //     return res.status(200).json({ status: "failed", message: "caretaking list empty", data:[] });
+    // }
     return res.status(200).json({ status: "success", message: "Success", data:  careTakingList  });
 }
 export const getAllCaretakingService=async(req,res)=>{

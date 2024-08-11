@@ -16,6 +16,7 @@ import Orders from "./pages/Orders";
 import Caretaker from "./pages/Caretaker";
 import Profile from "./pages/Profile";
 import Address from "./component/Address";
+import CaretakingStatus from "./pages/CaretakingStatus"
 const routerInfo = [
     {
         path: "/",
@@ -80,6 +81,10 @@ const routerInfo = [
     {
         path: "/profile",
         component: <Profile />
+    },
+    {
+        path: "/caretakingstatus",
+        component: <CaretakingStatus />
     },
     {
         path: "*",
