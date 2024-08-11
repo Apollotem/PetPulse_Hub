@@ -52,7 +52,7 @@ const AddBlog = () => {
             "api/blog/add",
             blogData,
         ).then((response) => {
-           if(response.status){            
+           if(response.status==="success"){            
             toast.success(response.message, {
                 position: 'top-right',
                 autoClose: 3000,
