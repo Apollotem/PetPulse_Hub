@@ -20,6 +20,8 @@ const Filter = () => {
         } else if (currentFilter === "ZtoA") {
             sortedData = product.slice().sort((a, b) => b.name.localeCompare(a.name));
         }
+        console.log(sortedData);
+        
         dispatch(filterAndStore(sortedData));
     };
     const handleSearchChange = (value) => {

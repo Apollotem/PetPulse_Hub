@@ -9,7 +9,7 @@ const products=useSelector(state=>state.products.filteredProduct);
 const imgPath=useSelector(state=>state.common.imagePath);
     return (
         <div className="topSpacing">
-         {   categorys&& <Categoryslider categorys={categorys}/>}
+         {/* {   categorys&& <Categoryslider categorys={categorys}/>} */}
             <Filter/>
             <div className="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-4 g-4" style={{    "margin": "10px 0px"}}>
                 {products.map((product, index) => (

@@ -10,6 +10,7 @@ const productSlice = createSlice({
             state.productList=action.payload;
         }, //this is an action creator
         filterAndStore:(state,action)=>{
+            console.log("Filtered Products:", action.payload);
             state.filteredProduct=action.payload;
         },
     },

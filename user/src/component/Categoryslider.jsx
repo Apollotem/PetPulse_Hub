@@ -62,16 +62,16 @@ const Categoryslider = ({ categorys, headding }) => {
           </button>
         </div>
         <div className="card-slider-main" ref={containerRef}>
-        {/* <div className="card-wrapper"  onClick={() => dispatch(setCategoryId(null))}>
+        <div className="card-wrapper"  onClick={() => dispatch(setCategoryId(null))}>
                 <div className="mainContainer">
                   <div className="image">
-                    <img src="{imgPath + category.image}" alt="all img" />
+                    <img src="./images/logo.png" alt="all img" />
                   </div>
                   <div className="categoryName">
                    All
                   </div>
                 </div>
-              </div> */}
+              </div>
           {
             categorys.map((category, index) => (
               <div className="card-wrapper" key={index} id={category._id} onClick={() => dispatch(setCategoryId(category._id))}>
