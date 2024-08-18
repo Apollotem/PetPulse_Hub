@@ -3,13 +3,13 @@ import { Link } from 'react-router-dom';
 import ButtonComponent from './ButtonComponent';
 import './CSS/Navbar.css';
 import { useCart } from "react-use-cart";
-import {fetchAndStore} from '../Slice/userSlice'
+import { fetchAndStore } from '../Slice/userSlice'
 import { useDispatch, useSelector } from 'react-redux';
 const Navbar = () => {
     const { totalItems } = useCart();
-    const dispatch=useDispatch()
+    const dispatch = useDispatch()
     const [isOpen, setIsOpen] = useState(false);
-    const userId=JSON.parse(localStorage.getItem('userId'));  
+    const userId = JSON.parse(localStorage.getItem('userId'));
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (isOpen && !event.target.closest('.navbar-container')) {
@@ -78,15 +78,25 @@ const Navbar = () => {
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/profile" className="menu">
+                                {/* <Link to="/profile" className="menu">
                                     <i className="bi bi-person-fill"></i>
-                                </Link>
+                                </Link> */}
+                                <div class="dropdown">
+                                    <button className="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style={{background:"#fff"}}>
+                                    <i className="bi bi-person-fill"></i>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                      <li><Link to="/orders" className="menu">My orders</Link></li>
+                                      <li><Link to="/profile" className="menu">View Requests</Link></li>
+                                      <li><Link to="/profile" className="menu"><i className="bi bi-power"></i>Logout</Link></li>
+                                    </ul>
+                                </div>
                             </li>
                         </>
                     ) : (
                         <li>
                             <Link to="/login">
-                               <button className="addbtn smallBtn">Login </button>
+                                <button className="addbtn smallBtn">Login </button>
                             </Link>
                         </li>
                     )}

@@ -175,7 +175,7 @@ export const Addaddress = ({ changeAddressVisibility }) => {
             <button type="button" className="checkOutBtn cancelBtn" onClick={changeAddressVisibility}>CANCEL</button>
           </div>
           <div className="col-md-6">
-            <button type="button" className="checkOutBtn" onClick={saveAddress}>Confirm</button>
+            <button type="button" className="checkOutBtn" onClick={saveAddress} style={{background:"#000"}}>Confirm</button>
           </div>
         </div>
       </form>
@@ -425,29 +425,71 @@ export const Addaddress = ({ changeAddressVisibility }) => {
 //   );
 // };
 
-const Address = ({changeAddressid}) => {
+// const Address = ({ changeAddressid }) => {
+//   const addressList = useSelector((state) => state.address.addressList);
+//   return (
+//       // <div className="form-check" key={key} onClick={() => changeAddressid(address._id)}>
+//       //   <input className="radioBtn" type="radio" name="flexRadioDefault" id={`address_${key}`} />
+//       //   <label className="form-check-label" htmlFor={`address_${key}`}>
+//       //     <b>{address.name}</b> {address.address}
+//       //   </label>
+//       // </div>
+//     <div class="row row-cols-1 row-cols-md-2 g-4">
+//             {addressList.length === 0 ? "address empty" : (
+//         addressList.map((address, key) => {
+//           return (
+           
+//               <div class="col"  key={key} onClick={() => changeAddressid(address._id)}>
+//                 <div class="card">
+//                 <input className="radioBtn" type="radio" name="flexRadioDefault" id={`address_${key}`} />
+//                   <div class="card-body">
+//                     {/* <h5 class="card-title"></h5> */}
+//                     <p class="card-text"><b>{address.name}</b>{address.address}</p>
+//                   </div>
+//                 </div>
+//               </div>
+          
+//           )
+//         })
+//       )}
+//     </div>
+//   )
+// }
+const Address = ({ changeAddressid }) => {
   const addressList = useSelector((state) => state.address.addressList);
+  const [selectedAddressId, setSelectedAddressId] = useState(null);
+
+  const handleAddressClick = (addressId) => {
+    setSelectedAddressId(addressId);
+    changeAddressid(addressId);
+  };
+
   return (
-    <>
-      {addressList.length === 0 ?"address empty": (
-        addressList.map((address, key) => {
-          return (
-            <div className="form-check" key={key} onClick={() => changeAddressid(address._id)}>
-              <input className="radioBtn" type="radio" name="flexRadioDefault" id={`address_${key}`} />
-              <label className="form-check-label" htmlFor={`address_${key}`}>
-                <b>{address.name}</b> {address.address}
-              </label>
-              <div className="remove" id={address._id}
-              //  onClick={e=>handleRemoveAddress(address._id)}
-              >
-                <i className="bi bi-trash3"></i>
+    <div className="row row-cols-1 row-cols-md-2 g-4">
+      {addressList.length === 0 ? "Address empty" : (
+        addressList.map((address, key) => (
+          <div className="col" key={key} onClick={() => handleAddressClick(address._id)} style={{cursor:"pointer"}}>
+            <div className={`card ${selectedAddressId === address._id ? 'selected' : ''}`}>
+              {/* Hidden radio button for logical selection */}
+              <input 
+                type="radio" 
+                name="flexRadioDefault" 
+                id={`address_${key}`} 
+                style={{ display: 'none' }} 
+                checked={selectedAddressId === address._id} 
+                onChange={() => {}} 
+              />
+              <div className="card-body">
+                <p className="card-text">
+                  <b>{address.name}</b>{address.address}
+                </p>
               </div>
             </div>
-          )
-        })
+          </div>
+        ))
       )}
-    </>
-  )
-}
+    </div>
+  );
+};
 
 export default Address

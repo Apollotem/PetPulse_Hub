@@ -87,9 +87,14 @@ export const validatePaymentStatus = async (req, res) => {
         return res.status(400).json({ msg: "Transaction is not legit!" });
     }
     try {
-        const updateDocument = await Order.findOneAndUpdate(
+        await Order.findOneAndUpdate(
             { razorpayOrderId: razorpay_order_id },// condition,
-            { $set: { status: "success" } },
+            {
+                $set: {
+                    status: "success",
+                    order_message: "Payment success"
+                }
+            },
             { new: true }
         )
     } catch (err) {
@@ -102,7 +107,7 @@ export const validatePaymentStatus = async (req, res) => {
     });
 }
 export const getOrder = async (req, res) => {
-    let orderDetails=[];
+    let orderDetails = [];
     const { userId } = req.query;
     try {
         orderDetails = await Order.find({ userId })
@@ -146,7 +151,7 @@ export const updateStatus = async (req, res) => {
 
 
 }
-export const cancelOrder=async (req, res) => {
+export const cancelOrder = async (req, res) => {
     try {
         const orderId = req.params.orderId;
         console.log(orderId);

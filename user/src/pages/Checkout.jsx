@@ -60,7 +60,7 @@ export const Checkout = () => {
       razorpayOrderId: "",
       status: paymentMode === "cod" ? "success" : "pending",
       paymentMode: paymentMode,
-      order_message: "",
+      order_message: "Payment Failed",
     };
     if (paymentMode === "cod") {
       httpRequest("POST", "api/order/cod", body)
@@ -73,12 +73,12 @@ export const Checkout = () => {
     } else {
       try {
         const order = await httpRequest("POST", "api/order/checkout", body);
-        console.log(order);
+        // console.log(order);
         var options = {
           key: "rzp_test_u5nxL1KN1AKLE0", // Enter the Key ID generated from the Dashboard
           amount,
           currency,
-          name: "PetPulse Hub",
+          name: "PetsWorld",
           description: "Test Transaction",
           image: "https://static.freshtohome.com/images/logo/2021/logo-medium.png",
           order_id: order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
@@ -108,7 +108,7 @@ export const Checkout = () => {
             address: "Razorpay Corporate Office",
           },
           theme: {
-            color: "#0fa8db",
+            color: "#ff0000",
           },
         };
         var rzp1 = new window.Razorpay(options);
@@ -126,23 +126,7 @@ export const Checkout = () => {
         console.error("Order creation failed:", error);
       }
     }
-    // e.preventDefault();
   };
-
-
-  // let completeOrder = () => {
-  //   if (!isEmpty) {
-  //     const product = items.map(({ _id, price, quantity }) => {
-  //       return { _id, quantity };
-  //     });
-  //   }
-  // };
-// const handleRemoveAddress=(addressId)=>{
-//   console.log(addressId);
-//   httpRequest('delete',`api/address/${addressId}`)
-//   .then((res)=>console.log(res))
-//   .catch((err)=>console.log(err))
-// }
   return (
     isEmpty ?<Notfound/>:
     <div className="container  col-10">
@@ -150,7 +134,7 @@ export const Checkout = () => {
      <Address changeAddressid={changeAddressid}/>
 
       <div className="col-12 ">
-        <button className="addAddressBtn headdingSpace " onClick={() => setAddressVisible(!isAddressVisible)}>+ Add Address</button>
+        <button className="addAddressBtn headdingSpace " onClick={() => setAddressVisible(!isAddressVisible)}>{isAddressVisible?"Close":"+ Add Address"}</button>
         {isAddressVisible && <Addaddress changeAddressVisibility={changeAddressVisibility} />}
       </div>
       <h5 className="headdingSpace">ORDER SUMMARY</h5>
@@ -197,11 +181,13 @@ export const Checkout = () => {
       </div>
       <ButtonComponent
         text="Confirm"
+        style={{background:"#000"}}
         classs={addressId == false ? "addbtn checkOutBtn disabled" : "addbtn checkOutBtn"}
         orderConfirmation={true}
         onClick={paymentHandler}
         disableValue={addressId == false ? true : false}
       />
+
     </div>
   );
 };

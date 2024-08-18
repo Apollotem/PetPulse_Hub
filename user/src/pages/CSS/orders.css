@@ -101,7 +101,9 @@ width: 100%;
     padding: 25px 32px;
 }
 .right-order{
-    width: 79%;
+  padding: 37px 17px;
+    margin-top: 14px;
+    width: 100%;
 }
 .flag-container{
     display: flex;

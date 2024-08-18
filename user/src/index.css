@@ -9,7 +9,8 @@
 :root {
   /* --primary:#3c8031; */
   /* --primary:#f48424; */
-  --primary: #EE6043;
+  /* --primary: #EE6043; */
+  --primary: #ff0000;
   --color: white;
   --projectedColor: #7755A2;
 }
@@ -42,6 +43,14 @@
   /* margin: 41px 0px; */
   font-family: Montserrat;
 }
+.card.selected {
+  /* border: 2px solid #007bff; */
+   /* Bootstrap's blue color */
+  border-radius: 5px; /* Smooth corners */
+  box-shadow: 0 0 10px rgba(0, 123, 255, 0.5); /* A subtle blue glow */
+  color: black;
+}
+
 
 
 .sub-headding {

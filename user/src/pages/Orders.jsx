@@ -192,14 +192,14 @@ const Orders = () => {
         <p>No orders found.</p>
       ) : (
         <div className="main">
-          <div className="left-filter">
+          {/* <div className="left-filter">
             <div className="mediumfont">Filters</div>
             <ul className="filter-ul">
               <li><div><input type="checkbox" className="checkbox" />On the way</div></li>
               <li><div><input type="checkbox" className="checkbox" />Delivered</div></li>
               <li><div><input type="checkbox" className="checkbox" />Cancelled</div></li>
             </ul>
-          </div>
+          </div> */}
           <div className="right-order">
             {/* {
               orders.map((order, index) => {

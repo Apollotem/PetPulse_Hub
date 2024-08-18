@@ -30,6 +30,6 @@
         margin: 0px 12px;
     }
     .selected {
-        background-color: var(--primary);
+        /* background-color: var(--primary); */
         color: white;
     }
