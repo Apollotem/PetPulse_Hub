@@ -7,12 +7,15 @@ import { useEffect,useState } from "react";
 import { httpRequest } from "./API/api"
 import { fetchAndStoreCategory } from "./Slice/categorySlice"
 import Chatbot from "./component/Chatbot"
+import Cart from "./pages/Cart";
 
 // import Toplinks from "./component/Toplinks";
 //  import Footer from "./component/Footer"
 const App = () => {
   const dispatch = useDispatch();
   const [isChatbotVisible, setIsChatbotVisible] = useState(false);
+  const [isCartVisible, setCartVisible] = useState(false); // State for cart visibility
+
   useEffect(() => {
     // Fetching categories
     httpRequest('get', 'api/category')
@@ -47,10 +50,13 @@ const App = () => {
   const handleChatbotClose = () => {
     setIsChatbotVisible(false); // Hide the chatbot
   };
+  const toggleCartVisibility = () => {
+    setCartVisible(!isCartVisible); // Toggle cart visibility
+  };
   return (
     <>
       {/* <Toplinks /> */}
-      <Navbar />
+      <Navbar onCartClick={toggleCartVisibility}/>
       {/* <Navbartop/> */}
       <AllRouter />
       {/* <Footer/> */}
@@ -67,6 +73,9 @@ const App = () => {
             <Chatbot onClose={handleChatbotClose} />
           </div>
         </div>
+      )}
+       {isCartVisible && (
+        <Cart callbackShowCart={toggleCartVisibility} />
       )}
     </>
   );

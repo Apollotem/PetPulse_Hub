@@ -40,6 +40,7 @@ const caretakingSchema = new Schema({
     },
     status: {
         type:String,
+        require:true
     },
 })
 export default mongoose.model("Caretaker",caretakingSchema);

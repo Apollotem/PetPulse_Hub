@@ -10,6 +10,20 @@ const Caretaker = () => {
         });
     }, []);
     const tableHeadding = [{ th: "#id" }, { th: "owner_name" }, { th: "phone_no" }, { th: "id_proof" }, { th: "pickup" }, { th: "deliver" }, { th: "hostel" }, { th: "address" }, { th: "Action" },];
+    const changeToReject = (id) => {
+        const confirmDelete = window.confirm('Are you sure you want to delete this item?');
+
+        if (confirmDelete) {
+            httpRequest('post', "api/user/updateCaretakeStatus", { id: id ,status:"Rejected"})
+                .then((res) => {
+                    if (res.status === "success") {
+                        let a = caretakingList.map(data => data._id === id ? { ...data, status: "Rejected" } : data)
+                        setCaretakingList(a)
+
+                    }
+                })
+        }
+    }
     return (
         <div className="flat-container content-div">
             <div className="card-header">
@@ -30,15 +44,15 @@ const Caretaker = () => {
                         {caretakingList.map((caretaker, index) => {
                             return (
                                 <tr key={index}>
-                                    <td>{index+1}</td>
+                                    <td>{index + 1}</td>
                                     <td>{caretaker.owner_name}</td>
                                     <td>{caretaker.phone_no},{caretaker.alt_phone_no}</td>
-                                    <td><img src={`http://localhost:5001/${caretaker.proof}` } alt="img" style={{"width": "100px"}} /></td>
+                                    <td><img src={`http://localhost:5001/${caretaker.proof}`} alt="img" style={{ "width": "100px" }} /></td>
                                     <td>{caretaker.pickup}</td>
                                     <td>{caretaker.deliver}</td>
                                     <td>{caretaker.hostel}</td>
                                     <td>{caretaker.address}</td>
-                                    <td>Update Status</td>
+                                    <td><button className="btn-primary" onClick={() => changeToReject(caretaker._id)}>{caretaker.status}</button></td>
                                 </tr>
                             )
                         })}

@@ -137,3 +137,24 @@ export const getAllCaretakingService=async(req,res)=>{
     }
     return res.status(200).json({ status: "success", message: "Success", data:  careTakingList  });
 }
+
+
+export const updateCaretakeStatus = async (req, res) => {
+    try {
+        const { id,status } = req.body;
+                const caretaking_service = await Caretaking.findByIdAndUpdate(
+            id,
+            { $set: { status:status } },// Update the status field
+            { new: true } // Return the updated document
+        );
+
+        if (caretaking_service) {
+            res.status(200).json({ status:"success",message: "Caretaking service updated successfully", updatedId:id });
+        } else {
+            res.status(200).json({status:"failed", message: "Caretaking service not found" });
+        }
+    } catch (error) {
+        res.status(500).json({status:"failed", message: "Error updating caretaking service", error });
+    }
+};
+

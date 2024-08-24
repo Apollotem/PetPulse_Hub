@@ -17,6 +17,7 @@ import Caretaker from "./pages/Caretaker";
 import Profile from "./pages/Profile";
 import Address from "./component/Address";
 import CaretakingStatus from "./pages/CaretakingStatus"
+import ViewRequest from "./pages/ViewRequest";
 const routerInfo = [
     {
         path: "/",
@@ -73,6 +74,10 @@ const routerInfo = [
     {
         path: "/orders",
         component: <Orders />
+    },
+    {
+        path: "/viewStatus",
+        component: <ViewRequest />
     },
     {
         path: "/caretaking",

@@ -16,6 +16,8 @@ export const Checkout = () => {
   const [paymentMode, setPaymentMode] = useState('cod');
   const [isAddressVisible, setAddressVisible] = useState(false);
   const addressList = useSelector((state) => state.address.addressList)
+  const imagePath=useSelector(state=>state.common.imagePath)
+
   const userId = JSON.parse(localStorage.getItem("userId"));
   const onCheckOut = () => {
     const userId = JSON.parse(localStorage.getItem("userId"));
@@ -143,7 +145,7 @@ export const Checkout = () => {
           return (
             <div className="col-12 row" style={{ marginBottom: "10px" }} key={index}>
               <div className="col-3" style={{ width: "100px" }}>
-                <img src={`http://localhost:5001/${item.image}`} alt="" />
+                <img src={`${imagePath}/${item.image}`} alt="" />
               </div>
               <div className="col-3" style={{ fontSize: "13px" }}>{item.name}</div>
               <div className="col-3" >{item.newPrice}</div>

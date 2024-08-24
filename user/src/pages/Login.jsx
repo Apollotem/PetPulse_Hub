@@ -58,7 +58,7 @@ export const Login = () => {
 
     <div className="login-container">
       <div className="mx-auto col-10 col-md-8 col-lg-4 loginBox">
-        <h3 className="main-headding">Welcome to PetPulse Hub</h3>
+        <h3 className="main-headding">Welcome to PetsWorld</h3>
         <p className="login-desc">The leading platform for pet lovers,sellers and buyers </p>
       
           <div className="form-group txtBox-spacing">

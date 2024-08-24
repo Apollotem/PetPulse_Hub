@@ -62,7 +62,9 @@ const Foods = () => {
   return (
     <>
       <Categoryslider categorys={filterCategory} />
-   { result.length===0 ?"Product was empty": <Produtcard categorys={filterCategory} headding="Top Fooods" />}
+   { result.length===0 ?<div className="noProduct" style={{    "padding": "98px 543px"}}>
+    <img src="images/no-product.png" alt="no-product" />
+   </div>: <Produtcard categorys={filterCategory} headding="Top Fooods" />}
     </>
   );
 };

@@ -14,8 +14,10 @@ button {
     display: flex;
     white-space: nowrap;
     overflow-x: auto;
-    margin-top: 10px;
+    /* margin-top: 10px; */
+    margin-top: 0px;
     gap: 30px;
+    /* gap: 4px; */
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
   }
@@ -68,8 +70,10 @@ button {
   }
   
   .card-wrapper img {
+    /* height: 143px;
+    width: 129px; */
     height: 143px;
-    width: 129px;
+    width: 120px;
     cursor: pointer;
     object-fit: contain;
   }

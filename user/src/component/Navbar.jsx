@@ -5,7 +5,7 @@ import './CSS/Navbar.css';
 import { useCart } from "react-use-cart";
 import { fetchAndStore } from '../Slice/userSlice'
 import { useDispatch, useSelector } from 'react-redux';
-const Navbar = () => {
+const Navbar = ({ onCartClick }) => {
     const { totalItems } = useCart();
     const dispatch = useDispatch()
     const [isOpen, setIsOpen] = useState(false);
@@ -71,23 +71,29 @@ const Navbar = () => {
                     ))}
                     {userId !== null ? (
                         <>
-                            <li>
+                            {/* <li>
                                 <Link to="/cart" className="menu">
                                     <i className="bi bi-bag-fill"></i>
                                     <small className='cartNumber'>{totalItems}</small>
                                 </Link>
+                            </li> */}
+                            <li>
+                                <div className="menu" onClick={onCartClick}>
+                                    <i className="bi bi-bag-fill"></i>
+                                    <small className='cartNumber'>{totalItems}</small>
+                                </div>
                             </li>
                             <li>
                                 {/* <Link to="/profile" className="menu">
                                     <i className="bi bi-person-fill"></i>
                                 </Link> */}
-                                <div class="dropdown">
+                                <div className="dropdown">
                                     <button className="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style={{background:"#fff"}}>
                                     <i className="bi bi-person-fill"></i>
                                     </button>
-                                    <ul class="dropdown-menu">
+                                    <ul className="dropdown-menu">
                                       <li><Link to="/orders" className="menu">My orders</Link></li>
-                                      <li><Link to="/profile" className="menu">View Requests</Link></li>
+                                      <li><Link to="/caretakingstatus" className="menu">View Requests</Link></li>
                                       <li><Link to="/profile" className="menu"><i className="bi bi-power"></i>Logout</Link></li>
                                     </ul>
                                 </div>
