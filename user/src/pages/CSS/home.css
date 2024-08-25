@@ -1,0 +1,26 @@
+.videoContainer{
+    width: 100%;
+    .desktop-video{
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+}
+.moreAndLessBtn-container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 14px 0px;
+}
+.moreAndLessBtn{
+    color: var(--primary);
+    padding: 7px 19px;
+    border-radius: 22px;
+    border: 2px solid var(--primary);
+    /* all: unset; */
+    background: #ffff;
+}
+.dogBanner{
+    padding: 29px 0px;
+}

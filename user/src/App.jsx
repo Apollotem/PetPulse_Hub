@@ -10,7 +10,7 @@ import Chatbot from "./component/Chatbot"
 import Cart from "./pages/Cart";
 
 // import Toplinks from "./component/Toplinks";
-//  import Footer from "./component/Footer"
+ import Footer from "./component/Footer"
 const App = () => {
   const dispatch = useDispatch();
   const [isChatbotVisible, setIsChatbotVisible] = useState(false);
@@ -59,7 +59,7 @@ const App = () => {
       <Navbar onCartClick={toggleCartVisibility}/>
       {/* <Navbartop/> */}
       <AllRouter />
-      {/* <Footer/> */}
+      <Footer/>
       <div className="chatbot-icon" onClick={handleChatbotClick}>
         <img
           src="./images/ai.png"

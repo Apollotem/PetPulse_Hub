@@ -109,7 +109,8 @@ const Navbar = ({ onCartClick }) => {
                 </ul>
                 <h1 className="logo">
                     <Link to="/">
-                        <img src="./images/logo.png" alt="" />
+                        {/* <img src="./images/logo.png" alt="" /> */}
+                        <img src="./images/logoLatest.png" alt="" />
                     </Link>
                 </h1>
             </div>

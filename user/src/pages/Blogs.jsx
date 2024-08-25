@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { httpRequest } from "../API/api"
 import ReactPlayer from 'react-player'
 
-const Blogs = () => {
+const Blogs = ({sx}) => {
     const [blogs, setBlogs] = useState([])
     useEffect(() => {
         httpRequest('get', "api/blog/")
@@ -13,7 +13,7 @@ const Blogs = () => {
             .catch((err) => console.log(err));
     }, []);
     return (
-        <div className="topSpacing">
+        <div className="topSpacing" style={{padding:sx && "0px"}}>
             <div className="row row-cols-1 row-cols-md-3 g-4" style={{ "marginTop": "40px" }}>
                 {
                     blogs.map((blog, index) => {

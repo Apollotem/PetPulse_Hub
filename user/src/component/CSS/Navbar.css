@@ -41,9 +41,12 @@
 
 .logo {
     order: 1;
-    font-size: 2.3rem;
+    font-size: 4rem;
     /* color: orangered; */
-    width: 50px;
+    width: 100px;
+    /* order: 1;
+    font-size: 2.3rem;
+    width: 50px; */
 }
 
 .menu-items li {
