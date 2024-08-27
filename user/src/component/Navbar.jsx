@@ -52,6 +52,9 @@ const Navbar = ({ onCartClick }) => {
             to: '/caretaking',
         },
     ];
+    const logOut=()=>{
+        localStorage.removeItem('userId')
+    }
     return (
         <nav className={`navbar ${isOpen ? 'open' : ''}`}>
             <div className="navbar-container crossBtn">
@@ -94,7 +97,7 @@ const Navbar = ({ onCartClick }) => {
                                     <ul className="dropdown-menu">
                                       <li><Link to="/orders" className="menu">My orders</Link></li>
                                       <li><Link to="/caretakingstatus" className="menu">View Requests</Link></li>
-                                      <li><Link to="/profile" className="menu"><i className="bi bi-power"></i>Logout</Link></li>
+                                      <li style={{cursor:"pointer"}} onClick={logOut} ><i className="bi bi-power" style={{color:"red",cursor:"pointer"}} ></i>Logout</li>
                                     </ul>
                                 </div>
                             </li>

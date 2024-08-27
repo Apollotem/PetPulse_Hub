@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux'
-import {changeVisibility} from "../Slice/visibilitySlice"
+import { changeVisibility } from "../Slice/visibilitySlice"
 const Navbar = () => {
     const menuData = [
         {
@@ -47,15 +47,15 @@ const Navbar = () => {
     //     isToogleVisibility(!navbarShowOrHide);
     //     console.log(navbarShowOrHide);
     // }
-    const visibility=useSelector((state)=>state.visibility.visibility)
+    const visibility = useSelector((state) => state.visibility.visibility)
 
     return (
         <>
-            <Topnavbar  
+            <Topnavbar
             // navbarShowOrHide={navbarShowOrHide} 
             // navbarCallBack={navbarCallBack}
-            />     
-            <div className={visibility?"content-container shows":"hide"}>
+            />
+            <div className={visibility ? "content-container shows" : "hide"}>
                 <div className="side-nav-container" >
                     {menuData.map((menuItem, index) => (
                         <div className="menu-container" key={index}>
@@ -73,7 +73,7 @@ const Navbar = () => {
                                 <Link to={menuItem.subMenu.url}>
                                     <div className="submenu" >{menuItem.subMenu.menu}</div>
                                 </Link>
-                                
+
                             )}
                         </div>
 
@@ -85,26 +85,32 @@ const Navbar = () => {
 }
 export default Navbar;
 export const Topnavbar = () => {
-    const dispatch=useDispatch();
-    const visibility=useSelector((state)=>state.visibility.visibility)
-// dispatch(changeVisibility(!visibility))
+    const dispatch = useDispatch();
+    const visibility = useSelector((state) => state.visibility.visibility)
+    // dispatch(changeVisibility(!visibility))
     return (
         <div className="topnav-container">
-           
+
             <div className="top-leftContainer">
-            <div className="logo">
-            <img src="./logo.png" alt="logo" style={{width:"40px"}}/>
+                <div className="logo">
+                    <img src="./logo.png" alt="logo" style={{ width: "40px" }} />
+                </div>
+                <div className="closingBtn" onClick={() => dispatch(changeVisibility(!visibility))}>
+                    <div className="bar"></div>
+                    <div className="bar"></div>
+                    <div className="bar"></div>
+                </div>
             </div>
-            <div className="closingBtn" onClick={()=>dispatch(changeVisibility(!visibility))}>
-                <div className="bar"></div>
-                <div className="bar"></div>
-                <div className="bar"></div>
-            </div>
-            </div>
-            <div className="admin-name">
-            {/* {navbarShowOrHide} */}
+            {/* <div className="admin-name">
                 Admin
-                <div className="option"><i className="bi bi-box-arrow-left"></i>Logout</div>
+                <div className="option"><i className="bi bi-box-arrow-left" style={{paddingRight: "6px",color:"red"}}></i>Logout</div>
+            </div> */}
+            <div className="dropdown" style={{all:"unset"}}>
+                <button className="btn btn-secondary dropdown-toggle"  style={{all:"unset"}} type="button" data-bs-toggle="dropdown" aria-expanded="false">
+Admin                </button>
+                <ul className="dropdown-menu">
+                    <li><i className="bi bi-box-arrow-left" style={{paddingRight: "6px",color:"red"}}></i>Logout</li>
+                </ul>
             </div>
         </div>
     );

@@ -114,7 +114,7 @@ img {
   font-weight: 500;
   /* line-height: 2rem; */
   color: white;
-  background-color: var(--primary);
+  background-color: black;
   margin: 0px 107px;
   border-radius: 3px;
 }

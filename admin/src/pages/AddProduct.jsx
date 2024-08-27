@@ -198,7 +198,7 @@ const AddProduct = () => {
     return (
         <div className="content-div">
             <div className="card-header">
-                <div className="card-heading">Add Product </div>
+                <div className="card-headding main-menu-headding">Add Product </div>
                 <div className="errorMessage">{message}</div>
             </div>
             <div className="table-container">

@@ -11,6 +11,6 @@ export const loginValidation = async (req, res, next) => {
     const passwordChecker = bcrypt.compareSync(password, adminExistOrNot.password);
     if (!passwordChecker)
         return res.status(404).json({ status:"failed",message: "Your login cradintials was wrong" })
-    return res.status(200).json({ status:"success",message: "Successfuly Logined" });
+    return res.status(200).json({ status:"success",message: "Successfuly Logined",adminId:adminExistOrNot._id });
     // if statusFlag
 }

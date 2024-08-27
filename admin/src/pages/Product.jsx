@@ -46,6 +46,36 @@ const Product = () => {
             console.log("Error fetching data:", error);
         });
     }, []);
+    const [expandedDescriptions, setExpandedDescriptions] = useState({});
+
+    const toggleDescription = (id) => {
+        setExpandedDescriptions(prevState => ({
+            ...prevState,
+            [id]: !prevState[id]
+        }));
+    };
+
+    const renderDescription = (product, id) => {
+        const isExpanded = expandedDescriptions[id];
+        const description = product.description;
+        const shouldShowMore = description.length > 50;
+
+        if (shouldShowMore) {
+            return (
+                <>
+                    {isExpanded ? description : `${description.substring(0, 50)}...`}
+                    <span 
+                        style={{ color: "blue", cursor: "pointer" }} 
+                        onClick={() => toggleDescription(id)}
+                    >
+                        {isExpanded ? ' less' : ' more'}
+                    </span>
+                </>
+            );
+        } else {
+            return description;
+        }
+    };
     return (
    
         <div className={visibility?"flat-container":"content-div"} > 
@@ -76,7 +106,7 @@ const Product = () => {
                             <td> <img src={`http://localhost:5001/${product.image}`} alt="img" style={{"width": "100px"}} /> </td>
                             <td>{product.oldPrice}</td>
                             <td>{product.newPrice}</td>
-                            <td>{product.description}</td>
+                            <td>{renderDescription(product, id)}</td>
                             <td>  <i className="bi bi-trash3-fill" id={product._id} onClick={e => deleteProduct(e)}></i>  </td>
                             {/* <td><i className="bi bi-pencil-square"></i> </td> */}
                             <td>

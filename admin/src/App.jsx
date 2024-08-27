@@ -5,7 +5,7 @@ import {AllRoutes} from "./AllRoutes";
 const App=()=> {
   return (
   <div className="nav-container">
-  <Navbar/>
+  {/* <Navbar/> */}
   {/* <Table/> */}
   <AllRoutes/>
   </div>

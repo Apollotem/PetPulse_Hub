@@ -17,7 +17,7 @@ const Rightnavbar = () => {
                 </li>
                 </Link>
                 <li className="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                    <h6 className="mb-0"><i className="bi bi-power"></i>Logout</h6>
+                    <h6 className="mb-0"><i className="bi bi-power" ></i>Logout</h6>
                 </li>
             </ul>
         </div>
