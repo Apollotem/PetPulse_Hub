@@ -105,7 +105,8 @@
 // export default AddProduct;
 import { useEffect, useRef, useState } from "react";
 import { httpRequest } from "../API/api";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const AddProduct = () => {
     const productName = useRef('');
     const oldPrice = useRef('');
@@ -188,8 +189,20 @@ const AddProduct = () => {
         productDetails.append('category_id', categoryId);
 
         httpRequest('post', 'api/product/save', productDetails)
-            .then((response) => {
-                showMessage(response.message);
+            .then((res) => {
+                // showMessage(response.message);
+                if (res.status == "success") {
+                    toast.success(res.message, {
+                        position: 'top-right',
+                        autoClose: 3000,
+                    });
+                    setProductList(prevDetails => prevDetails.filter(product => product._id !== product_id));
+                } else {
+                    toast.error(res.message, {
+                        position: 'top-right',
+                        autoClose: 3000,
+                    });
+                }
                 resetValues();
             })
             .catch((err) => console.log(err));
@@ -197,6 +210,7 @@ const AddProduct = () => {
 
     return (
         <div className="content-div">
+            <ToastContainer/>
             <div className="card-header">
                 <div className="card-headding main-menu-headding">Add Product </div>
                 <div className="errorMessage">{message}</div>

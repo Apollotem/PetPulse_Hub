@@ -76,8 +76,8 @@ try{
     return  res.status(500).send({message:'deletion failed',error:err,id:category_id,status:"failed"});
 }
 if (!deleteFlag) {
-    return res.status(404).json({ message: 'Product not found' ,id:category_id,status:"failed"});
+    return res.status(404).json({ message: 'Category not found' ,id:category_id,status:"failed"});
 }
-return  res.status(200).json({ message: 'Product deleted successfully', deleteFlag ,status:"success"});
+return  res.status(200).json({ message: 'Category deleted successfully', deleteFlag ,status:"success"});
 
 }

@@ -106,96 +106,197 @@
 //   );
 // }
 
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { useNavigate, useLocation } from "react-router";
-import { useState, useRef } from "react";
-import "./CSS/Login.css";
+// import { Link } from "react-router-dom";
+// import { useSelector } from "react-redux";
+// import { useNavigate, useLocation } from "react-router";
+// import { useState, useRef } from "react";
+// import "./CSS/Login.css";
+// import { httpRequest } from "../API/api";
+// import { useDispatch } from "react-redux";
+// import { fetchAndStore } from "../Slice/userSlice";
+// import { setUserId } from "../Slice/commonSlice";
+
+// export const Login = () => {
+//   const dispatch = useDispatch();
+//   const email = useRef("");
+//   const password = useRef(""); // Corrected typo here
+//   const navigate = useNavigate();
+//   const location = useLocation();
+//   const [passwordLength, setErrorMsg] = useState(" ");
+//   const previousRoute = useSelector((state) => state.common.prvRoute);
+//   const [isValid, setIsValid] = useState(false);
+
+//   const validateEmail = (e) => {
+//     const emailValue = e.target.value;
+//     // Regular expression pattern for a valid email address
+//     const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+//     setIsValid(pattern.test(emailValue) ? "" : "Enter valid e-mail");
+//   };
+
+//   const checkPasswordLength = (e) => {
+//     const currentValue = e.target.value;
+//     if (currentValue.length < 6) {
+//       setErrorMsg("Password length must be >=6 ");
+//     } else {
+//       setErrorMsg("");
+//     }
+//   };
+
+//   const login = () => {
+//     const loginData = {
+//       email: email.current.value,
+//       password: password.current.value, // Corrected typo here
+//     };
+//     httpRequest('post', 'api/user/login', loginData)
+//       .then((res) => {
+//         localStorage.setItem("userId", JSON.stringify(res.user_id)); // Store userId correctly
+//         dispatch(fetchAndStore(res.user_id)); // Use the correct user_id from response
+//         dispatch(setUserId(res.user_id)); // Use the correct user_id from response
+//         (previousRoute === "/" || previousRoute === "/signup") ? navigate("/") : navigate("/cart");
+//       })
+//       .catch((error) => console.log(error));
+//   };
+
+//   return (
+//     <div className="login-container">
+//       <div className="mx-auto col-10 col-md-8 col-lg-4 loginBox">
+//         <h3 className="main-heading">Welcome to PetsWorld</h3>
+//         <p className="login-desc">The leading platform for pet lovers, sellers, and buyers</p>
+
+//         <div className="form-group txtBox-spacing">
+//           <input
+//             type="text"
+//             className="form-control username"
+//             placeholder="Email"
+//             ref={email}
+//             onChange={validateEmail}
+//           />
+//           <small className="errorMsg">{isValid}</small>
+//         </div>
+//         <div className="form-group txtBox-spacing">
+//           <input
+//             type="password"
+//             className="form-control password"
+//             placeholder="Password"
+//             ref={password} // Corrected typo here
+//             onChange={checkPasswordLength}
+//           />
+//           <small className="errorMsg">{passwordLength}</small>
+//         </div>
+//         <div className="form-group txtBox-spacing">
+//           <button
+//             type="button"
+//             className={(passwordLength.length === 0 && isValid.length === 0) ? "bigButton" : "bigButton disabled"}
+//             onClick={login}
+//             disabled={(passwordLength.length === 0 && isValid.length === 0) ? false : true}
+//           >
+//             Log in
+//           </button>
+//         </div>
+
+//         <small className="redirectLink">
+//           Don't have an account? <Link to="/signup">Sign Up</Link>
+//         </small>
+//       </div>
+//     </div>
+//   );
+// };
+import React, { useState, useRef } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setAuthId } from "../Slice/commonSlice";
 import { httpRequest } from "../API/api";
-import { useDispatch } from "react-redux";
-import { fetchAndStore } from "../Slice/userSlice";
+import "./CSS/Login.css";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const Login = () => {
-  const dispatch = useDispatch();
-  const email = useRef("");
-  const password = useRef(""); // Corrected typo here
-  const navigate = useNavigate();
-  const location = useLocation();
-  const [passwordLength, setErrorMsg] = useState(" ");
-  const previousRoute = useSelector((state) => state.common.prvRoute);
-  const [isValid, setIsValid] = useState(false);
+    const dispatch = useDispatch();
+    const email = useRef("");
+    const password = useRef("");
+    const navigate = useNavigate();
+    const previousRoute = useSelector(state => state.common.prvRoute);
+    const [passwordLength, setErrorMsg] = useState(" ");
+    const [isValid, setIsValid] = useState(false);
 
-  const validateEmail = (e) => {
-    const emailValue = e.target.value;
-    // Regular expression pattern for a valid email address
-    const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    setIsValid(pattern.test(emailValue) ? "" : "Enter valid e-mail");
-  };
-
-  const checkPasswordLength = (e) => {
-    const currentValue = e.target.value;
-    if (currentValue.length < 6) {
-      setErrorMsg("Password length must be >=6 ");
-    } else {
-      setErrorMsg("");
-    }
-  };
-
-  const login = () => {
-    const loginData = {
-      email: email.current.value,
-      password: password.current.value, // Corrected typo here
+    const validateEmail = (e) => {
+        const emailValue = e.target.value;
+        const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        setIsValid(pattern.test(emailValue) ? "" : "Enter valid e-mail");
     };
-    httpRequest('post', 'api/user/login', loginData)
-      .then((res) => {
-        localStorage.setItem("userId", JSON.stringify(res.user_id)); // Store userId correctly
-        dispatch(fetchAndStore(res.user_id)); // Use the correct user_id from response
-        (previousRoute === "/" || previousRoute === "/signup") ? navigate("/") : navigate("/cart");
-      })
-      .catch((error) => console.log(error));
-  };
 
-  return (
-    <div className="login-container">
-      <div className="mx-auto col-10 col-md-8 col-lg-4 loginBox">
-        <h3 className="main-heading">Welcome to PetsWorld</h3>
-        <p className="login-desc">The leading platform for pet lovers, sellers, and buyers</p>
+    const checkPasswordLength = (e) => {
+        const currentValue = e.target.value;
+        if (currentValue.length < 6) {
+            setErrorMsg("Password length must be >=6 ");
+        } else {
+            setErrorMsg("");
+        }
+    };
 
-        <div className="form-group txtBox-spacing">
-          <input
-            type="text"
-            className="form-control username"
-            placeholder="Email"
-            ref={email}
-            onChange={validateEmail}
-          />
-          <small className="errorMsg">{isValid}</small>
-        </div>
-        <div className="form-group txtBox-spacing">
-          <input
-            type="password"
-            className="form-control password"
-            placeholder="Password"
-            ref={password} // Corrected typo here
-            onChange={checkPasswordLength}
-          />
-          <small className="errorMsg">{passwordLength}</small>
-        </div>
-        <div className="form-group txtBox-spacing">
-          <button
-            type="button"
-            className={(passwordLength.length === 0 && isValid.length === 0) ? "bigButton" : "bigButton disabled"}
-            onClick={login}
-            disabled={(passwordLength.length === 0 && isValid.length === 0) ? false : true}
-          >
-            Log in
-          </button>
-        </div>
+    const login = () => {
+        const loginData = { email: email.current.value, password: password.current.value };
+        
+        httpRequest('post', 'api/user/login', loginData)
+            .then((res) => {
+                if(res.status==="success")
+               { 
+                localStorage.setItem("userId", res.user_id);
+                dispatch(setAuthId(res.user_id)); 
+                navigate("/")
+            }
+            else {
+                toast.error(res.message, {
+                    position: 'top-right',
+                    autoClose: 3000,
+                });
+            }
+            })
+            .catch((error) => console.log(error));
+    };
 
-        <small className="redirectLink">
-          Don't have an account? <Link to="/signup">Sign Up</Link>
-        </small>
-      </div>
-    </div>
-  );
+    return (
+        <div className="login-container">
+             <ToastContainer/>
+            <div className="mx-auto col-10 col-md-8 col-lg-4 loginBox">
+                <h3 className="main-heading">Welcome to PetsWorld</h3>
+                <p className="login-desc">The leading platform for pet lovers, sellers, and buyers</p>
+
+                <div className="form-group txtBox-spacing">
+                    <input
+                        type="text"
+                        className="form-control username"
+                        placeholder="Email"
+                        ref={email}
+                        onChange={validateEmail}
+                    />
+                    <small className="errorMsg">{isValid}</small>
+                </div>
+                <div className="form-group txtBox-spacing">
+                    <input
+                        type="password"
+                        className="form-control password"
+                        placeholder="Password"
+                        ref={password}
+                        onChange={checkPasswordLength}
+                    />
+                    <small className="errorMsg">{passwordLength}</small>
+                </div>
+                <div className="form-group txtBox-spacing">
+                    <button
+                        type="button"
+                        className={(passwordLength.length === 0 && isValid.length === 0) ? "bigButton" : "bigButton disabled"}
+                        onClick={login}
+                        disabled={(passwordLength.length === 0 && isValid.length === 0) ? false : true}
+                    >
+                        Log in
+                    </button>
+                </div>
+
+                <small className="redirectLink">
+                    Don't have an account? <Link to="/signup">Sign Up</Link>
+                </small>
+            </div>
+        </div>
+    );
 };

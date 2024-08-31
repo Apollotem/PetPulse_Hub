@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { httpRequest } from "../API/api"
 import {useSelector} from "react-redux"
 import { Link } from "react-router-dom"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import "../components/assct/Table.css"
 const Product = () => {
     const tableHeadding = [
@@ -20,14 +22,14 @@ const Product = () => {
         httpRequest('delete',`api/product/${product_id}`)
             .then((res) => {
                 console.log(res.data);
-                if (res.data.status == "success") {
-                    toast.success(res.data.message, {
+                if (res.status == "success") {
+                    toast.success(res.message, {
                         position: 'top-right',
                         autoClose: 3000,
                     });
                     setProductList(prevDetails => prevDetails.filter(product => product._id !== product_id));
                 } else {
-                    toast.error(res.data.message, {
+                    toast.error(res.message, {
                         position: 'top-right',
                         autoClose: 3000,
                     });
@@ -79,6 +81,7 @@ const Product = () => {
     return (
    
         <div className={visibility?"flat-container":"content-div"} > 
+        <ToastContainer/>
         <div className="card-header">
             <div className="card-headding main-menu-headding">Product Details</div>
             <div className="top-button">

@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux'
 import { changeVisibility } from "../Slice/visibilitySlice"
+import { useEffect } from "react";
 const Navbar = () => {
     const menuData = [
         {
@@ -88,12 +89,17 @@ export const Topnavbar = () => {
     const dispatch = useDispatch();
     const visibility = useSelector((state) => state.visibility.visibility)
     // dispatch(changeVisibility(!visibility))
+const navigate=useNavigate()
+    const logout=()=>{
+        localStorage.removeItem('adminId');
+        navigate('/login'); 
+    }
     return (
         <div className="topnav-container">
 
             <div className="top-leftContainer">
                 <div className="logo">
-                    <img src="./logo.png" alt="logo" style={{ width: "40px" }} />
+                    <img src="./images/logoLatest.png" alt="logo" style={{ width: "81px" }} />
                 </div>
                 <div className="closingBtn" onClick={() => dispatch(changeVisibility(!visibility))}>
                     <div className="bar"></div>
@@ -109,7 +115,7 @@ export const Topnavbar = () => {
                 <button className="btn btn-secondary dropdown-toggle"  style={{all:"unset"}} type="button" data-bs-toggle="dropdown" aria-expanded="false">
 Admin                </button>
                 <ul className="dropdown-menu">
-                    <li><i className="bi bi-box-arrow-left" style={{paddingRight: "6px",color:"red"}}></i>Logout</li>
+                    <li onClick={logout} style={{cursor:'pointer'}}><i className="bi bi-box-arrow-left" style={{paddingLeft: "10px",paddingRight: "6px",color:"red",cursor:'pointer'}}></i>Logout</li>
                 </ul>
             </div>
         </div>

@@ -25,6 +25,8 @@ const Cart = ({ callbackShowCart }) => {
   }
   const handleShow = () => {
     setCartVisible(!cartIsVisible)
+    callbackShowCart(); // Trigger the parent component to close the cart and remove opacity
+
     // history(-1);
   }
   return (

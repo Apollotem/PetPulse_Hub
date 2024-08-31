@@ -5,6 +5,8 @@ import { useDispatch } from "react-redux"
 import { setRoute } from "../Slice/commonSlice"
 import { httpRequest } from "../API/api"
 import "./CSS/Login.css"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const Signup = () => {
   const userId = JSON.parse(localStorage.getItem("userId"));
@@ -56,8 +58,17 @@ export const Signup = () => {
     }
     httpRequest('post', 'api/user/signup', signupData)
       .then((res) => {
+        // { message: "user already exist", status: "failed" }
+        if(res.status==="failed"){
+          toast.error(res.message, {
+            position: 'top-right',
+            autoClose: 3000,
+        });
+        }
+      else{
         dispatch(setRoute("/signup"))
         navigate("/login")
+      }
       })
       .catch((err) =>  {
         showHideMessage("Something went wrong try again")
@@ -68,6 +79,7 @@ export const Signup = () => {
 
   return (
     <div className="login-container">
+            <ToastContainer/>
       {userId === null ? <div className="mx-auto col-10 col-md-8 col-lg-4 loginBox">
         <h3 className="main-headding">Signup</h3>
         <p className="login-desc">Signup and join the pet community </p>

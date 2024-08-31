@@ -43,6 +43,7 @@ const Home = () => {
       route: "/accessorys"
     },
   ];
+  
   const products = useSelector((state) => state.products.productList);
   const [dogFood, setDogFood] = useState([])
   const [catFood, setcatFood] = useState([])

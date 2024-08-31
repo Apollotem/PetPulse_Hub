@@ -26,7 +26,7 @@ export const signupMiddleware = async (req, res, next) => {
         console.log(error);
     }
     if (existingEmail)
-        return res.status(400).json({ message: "user already exist", status: "failed" })
+        return res.status(200).json({ message: "user already exist", status: "failed" })
 
     const hashedPassword = bcrypt.hashSync(password)
 
@@ -52,10 +52,10 @@ export const loginMiddleware = async (req, res, next) => {
     }
     catch (error) { return console.log(error); }
     if (!existingUser)
-        return res.status(401).json({ message: "coudn't find user e-mail", status: "failed", user_id: null })
+        return res.status(200).json({ message: "coudn't find user e-mail", status: "failed", user_id: null })
     const isPasswordCorrect = bcrypt.compareSync(password, existingUser.password)
     if (!isPasswordCorrect)
-        return res.status(401).json({ message: "password was wrong ", status: "failed", user_id: null })
+        return res.status(200).json({ message: "password was wrong ", status: "failed", user_id: null })
     return res.status(200).json({ message: "Login was successful", status: "success", user_id: existingUser._id })
 }
 export const storeAddress = async (req, res) => {

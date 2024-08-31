@@ -245,6 +245,31 @@ img {
 .left-details {
   flex: 1; /* Allow this div to take up available space */
 }
+/* Base styles for main content */
+.main-content {
+  transition: opacity 0.3s ease-in-out;
+}
+
+/* When the cart is visible, apply this class to reduce opacity */
+.blurred {
+  opacity: 0.3; /* Adjust this value for the desired effect */
+  pointer-events: none; /* Prevent interaction with the content */
+}
+
+.cart-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999; /* Ensure the overlay is on top */
+}
+
+
 
 .right-image img {
   max-width: 200px; /* Limit the size of the image */
