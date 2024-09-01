@@ -118,7 +118,7 @@ import "./CSS/orders.css";
 import { useSelector } from "react-redux";
 
 const Orders = () => {
-  const userId = JSON.parse(localStorage.getItem("userId"));
+  const userId = localStorage.getItem("userId")
   const products = useSelector((state) => state.products.productList);
   const imgPath = useSelector(state => state.common.imagePath);
   const addressArray = useSelector(state => state.address.addressList);

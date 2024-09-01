@@ -87,6 +87,19 @@ export const getAddress = async (req, res) => {
     }
     return res.status(200).json({ status: "success", message: "Success", data: { addressList } });
 }
+export const getAllAddress = async (req, res) => {
+    let addressList;
+    try {
+        addressList = await Address.find(); // Corrected here
+    } catch (error) {
+        return res.status(404).json({ status: "failed", message: `Something went wrong: ${error}`, data: [] });
+    }
+    if (addressList.length === 0) {
+        return res.status(200).json({ status: "failed", message: "Address list empty", data:[] });
+    }
+    return res.status(200).json({ status: "success", message: "Success", data: { addressList } });
+}
+
 
 export const storeCaretaking=async(req,res)=>{
     const { userId,type,owner_name,phone_no,alt_phone_no,hostel,pickup,deliver,use,address } = req.body;

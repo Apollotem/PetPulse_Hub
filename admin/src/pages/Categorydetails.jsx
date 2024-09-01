@@ -4,37 +4,44 @@ import { httpRequest } from "../API/api"
 import { useSelector } from "react-redux"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { InputText } from 'primereact/inputtext';
+import { Column } from 'primereact/column';
+
+import { DataTable } from 'primereact/datatable';
+import { Dropdown } from 'primereact/dropdown';
+import 'primereact/resources/themes/saga-blue/theme.css'; // Theme CSS
+import 'primereact/resources/primereact.min.css'; // Core CSS
+import 'primeicons/primeicons.css'; // Icons
+
 export const Categorydetails = () => {
-    const [categorys, setCategoryDetails] = useState([]);
-    const visibility = useSelector((state) => state.visibility.visibility)
-    // const deleteCategory = (e) => {
-    //     const category_id = e.target.id;
-    //     const url = `api/category/${category_id}`;
-    //     httpRequest('delete', url)
-    //         .then((data) => {
-    //             setCategoryDetails(prevDetails => prevDetails.filter(category => category._id !== category_id));
-    //         });
-    // }
+    const [categories, setCategoryDetails] = useState([]);
+    const [filters, setFilters] = useState({
+        global: { value: null, matchMode: 'contains' }
+    });
+    const [rowsPerPage, setRowsPerPage] = useState(5); // Default rows per page
+    const visibility = useSelector((state) => state.visibility.visibility);
+    const [expandedIDs, setExpandedIDs] = useState({}); // State for tracking expanded IDs
+    const toggleExpand = (id) => {
+        setExpandedIDs((prev) => ({
+            ...prev,
+            [id]: !prev[id]
+        }));
+    };
     const deleteCategory = (e) => {
         const category_id = e.target.id;
 
         // Ask for confirmation
         const isConfirmed = window.confirm("Are you sure you want to delete this category?");
-
         if (isConfirmed) {
-            // User confirmed, proceed with deletion
             const url = `api/category/${category_id}`;
             httpRequest('delete', url)
                 .then((data) => {
-                    // Update state after successful deletion
-                    // console.log(data);
-                    if (data.status==="success") {
+                    if (data.status === "success") {
                         toast.success(data.message, {
                             position: 'top-right',
                             autoClose: 2000,
                         });
-                    }
-                    else {
+                    } else {
                         toast.error(data.message, {
                             position: 'top-right',
                             autoClose: 2000,
@@ -43,7 +50,6 @@ export const Categorydetails = () => {
                     setCategoryDetails(prevDetails => prevDetails.filter(category => category._id !== category_id));
                 })
                 .catch(error => {
-                    // Optionally, handle the error
                     console.error("Error deleting category:", error);
                 });
         }
@@ -51,7 +57,6 @@ export const Categorydetails = () => {
 
     useEffect(() => {
         httpRequest('get', "api/category").then((data) => {
-            // Check if the fetched data is an object and has 'categoryDetails' array
             if (data && Array.isArray(data.categoryDetails)) {
                 setCategoryDetails(data.categoryDetails);
             } else {
@@ -61,131 +66,218 @@ export const Categorydetails = () => {
             console.error("Error fetching data:", error);
         });
     }, []);
-    const tableHeadding = [{ th: "#id" }, { th: "Main category" }, { th: "Category" }, { th: "subCategory" }, { th: "image" }, { th: "Action" },];
+
+    const header = (
+        <div className="flex justify-content-between align-items-center">
+            <div className="flex align-items-center">
+                <span className="mr-2">Show</span>
+                <Dropdown
+                    value={rowsPerPage}
+                    options={[5, 10, 15]}
+                    onChange={(e) => setRowsPerPage(e.value)}
+                    placeholder="Select Rows"
+                    className="p-dropdown"
+                    style={{ width: '75px' }}
+                />
+                <span className="ml-2">records</span>
+            </div>
+            <div className="flex align-items-center">
+                <InputText
+                    placeholder="Search..."
+                    onInput={(e) => setFilters({ ...filters, global: { value: e.target.value, matchMode: 'contains' } })}
+                    style={{ width: '250px' }}
+                />
+            </div>
+        </div>
+
+    );
+
     return (
         <div className={visibility ? "flat-container" : "content-div"}>
             <ToastContainer />
             <div className="card-header">
-                <div className="card-headding main-menu-headding">Category</div>
-                {/* <div className="errorMessage">{alertMessage}</div> */}
+                <div className="card-heading main-menu-heading">Category</div>
                 <div className="top-button">
-                    <Link to="/addcategory"> <button className="btn-primary"> +Add</button></Link>
+                    <Link to="/addcategory">
+                        <button className="btn-primary"> +Add</button>
+                    </Link>
                 </div>
             </div>
-            {/* <div className="content-div"> */}
-            <div className="">
-                <table className="table-container table">
-                    <thead>
-                        <tr className="table-headding">
-                            {
-                                tableHeadding.map((eachHeadding, id) =>
-                                    <td key={id}>{eachHeadding.th}</td>
-                                )
-                            }
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            categorys.map((category, id) =>
-                                <tr key={id} scope="row">
-                                    <td>{category._id}</td>
-                                    <td>{category.mainCategory}</td>
-                                    <td>{category.category}</td>
-                                    <td>{category.subCategory}</td>
-                                    <td><img src={`http://localhost:5001/${category.image}`} alt="banner" className="bannerImg" /></td>
-                                    <td>  <i className="bi bi-trash3-fill" id={category._id} onClick={deleteCategory}></i>  </td>
-                                    <td>
-                                        <Link to={`/categoryupdate/${category._id}`}>
-                                            <i className="bi bi-pencil-square"  ></i>
-                                        </Link>
-                                    </td>
-                                    {/* <td><i className="bi bi-pencil-square"></i> </td> */}
-                                </tr>
-                            )
-                        }
-                    </tbody>
-                </table>
-            </div>
+
+            <DataTable
+                value={categories}
+                paginator
+                rows={rowsPerPage}
+                filters={filters}
+                onFilter={(e) => setFilters(e.filters)}
+                header={header}
+                emptyMessage="No categories found."
+                globalFilterFields={['Slno', '_id', 'mainCategory', 'category', 'subCategory']}
+                // rowsPerPageOptions={[5, 10, 15]} // Options for rows per page
+            >
+                <Column header="Slno" body={(rowData, { rowIndex }) => rowIndex + 1} />
+                <Column field="_id" header="#id" body={(rowData) => (
+                    <span style={{ cursor: 'pointer' }} onClick={() => toggleExpand(rowData._id)}>
+                        {expandedIDs[rowData._id] ? rowData._id : rowData._id.charAt(0)}
+                        {rowData._id.length > 1 && (
+                            <span style={{ color: 'blue', cursor: 'pointer' }}>
+                                {expandedIDs[rowData._id] ? " Less" : " More"}
+                            </span>
+                        )}
+                    </span>
+                )} />
+
+                <Column field="mainCategory" header="Main Category" />
+                <Column field="category" header="Category" />
+                <Column field="subCategory" header="SubCategory" />
+                <Column
+                    field="image"
+                    header="Image"
+                    body={(rowData) => (
+                        <img src={`http://localhost:5001/${rowData.image}`} alt="banner" className="bannerImg" />
+                    )}
+                />
+                {/* <Column
+                    header="Action"
+                    body={(rowData) => (
+                        <>
+                            <i className="bi bi-trash3-fill" id={rowData._id} onClick={deleteCategory}></i>
+                            <Link to={`/categoryupdate/${rowData._id}`}>
+                                <i className="bi bi-pencil-square"></i>
+                            </Link>
+                        </>
+                    )}
+                /> */}
+                <Column
+    header="Action"
+    body={(rowData) => (
+        <>
+            <i
+                className="bi bi-trash3-fill"
+                id={rowData._id}
+                onClick={deleteCategory}
+                style={{ color: 'red', marginRight: '8px', cursor: 'pointer' }} // Red color for trash and right margin for spacing
+            ></i>
+            <Link to={`/categoryupdate/${rowData._id}`}>
+                <i
+                    className="bi bi-pencil-square"
+                    style={{ color: 'blue', cursor: 'pointer' }} // Blue color for edit
+                ></i>
+            </Link>
+        </>
+    )}
+/>
+
+            </DataTable>
         </div>
     );
-}
-// export default Categorydetails;
-// export const AddCategory = () => {
-//     const maincategory = useRef('');
-//     const category = useRef('');
-//     const subcategory = useRef('');
-//     const [image, setImage] = useState("");
-//     const resetValue = () => {
-//         maincategory.current.value = "";
-//         category.current.value = "";
-//         subcategory.current.value = "";
-//         setImage("");
-//     }
-//     const saveCategory = (e) => {
-//         const categoryData = new FormData();
-//         categoryData.append("mainCategory", maincategory.current.value);
-//         categoryData.append("category", category.current.value);
-//         categoryData.append("subCategory", subcategory.current.value);
-//         categoryData.append("image", image);
-//         // console.log(categoryData);
-//         httpRequest('post', 'api/category/add', categoryData)
-//             .then((data) => {
-//                 // showMessage();
-//                 toast.success(data.message, {
-//                     position: 'top-right',
-//                     autoClose: 2000,
-//                     onClose: () => resetValue()// Redirect after toast is closed
+};
+
+// export const Categorydetails = () => {
+//     const [categorys, setCategoryDetails] = useState([]);
+//     const visibility = useSelector((state) => state.visibility.visibility)
+//     // const deleteCategory = (e) => {
+//     //     const category_id = e.target.id;
+//     //     const url = `api/category/${category_id}`;
+//     //     httpRequest('delete', url)
+//     //         .then((data) => {
+//     //             setCategoryDetails(prevDetails => prevDetails.filter(category => category._id !== category_id));
+//     //         });
+//     // }
+//     const deleteCategory = (e) => {
+//         const category_id = e.target.id;
+
+//         // Ask for confirmation
+//         const isConfirmed = window.confirm("Are you sure you want to delete this category?");
+
+//         if (isConfirmed) {
+//             // User confirmed, proceed with deletion
+//             const url = `api/category/${category_id}`;
+//             httpRequest('delete', url)
+//                 .then((data) => {
+//                     // Update state after successful deletion
+//                     // console.log(data);
+//                     if (data.status==="success") {
+//                         toast.success(data.message, {
+//                             position: 'top-right',
+//                             autoClose: 2000,
+//                         });
+//                     }
+//                     else {
+//                         toast.error(data.message, {
+//                             position: 'top-right',
+//                             autoClose: 2000,
+//                         });
+//                     }
+//                     setCategoryDetails(prevDetails => prevDetails.filter(category => category._id !== category_id));
+//                 })
+//                 .catch(error => {
+//                     // Optionally, handle the error
+//                     console.error("Error deleting category:", error);
 //                 });
-//             })
-//             .catch((error) => console.log(error));
-//     }
+//         }
+//     };
+
+//     useEffect(() => {
+//         httpRequest('get', "api/category").then((data) => {
+//             // Check if the fetched data is an object and has 'categoryDetails' array
+//             if (data && Array.isArray(data.categoryDetails)) {
+//                 setCategoryDetails(data.categoryDetails);
+//             } else {
+//                 console.error("Fetched data does not contain 'categoryDetails' array:", data);
+//             }
+//         }).catch(error => {
+//             console.error("Error fetching data:", error);
+//         });
+//     }, []);
+//     const tableHeadding = [{ th: "#id" }, { th: "Main category" }, { th: "Category" }, { th: "subCategory" }, { th: "image" }, { th: "Action" },];
 //     return (
-//         <div className="content-div">
+//         <div className={visibility ? "flat-container" : "content-div"}>
 //             <ToastContainer />
 //             <div className="card-header">
-//                 <div className="card-headding">Add Category</div>
-//                 {/* <div className="errorMessage">{message}</div> */}
-//             </div>
-//             <div className="table-container">
-//                 <div className="row " style={{ padding: "37px" }}>
-//                     <div className="col">
-//                         <label htmlFor="maincat">Main Category</label>
-//                         <select className="form-select" id="maincat" ref={maincategory} aria-label="Default select example">
-//                             <option defaultValue="Select" selected>--Select--</option>
-//                             <option value="Pet">Pet</option>
-//                             <option value="Food">Food</option>
-//                             <option value="Accessorys">Accessorys</option>
-//                             <option value="Medicine">Medicine</option>
-//                         </select>
-//                     </div>
-//                     <div className="col">
-//                         <label htmlFor="category">Category</label>
-//                         <input type="text" id="category" ref={category} className="form-control" />
-//                     </div>
-//                 </div>
-//                 <div className="row" style={{ padding: "16px 37px" }}>
-//                     <div className="col">
-//                         <label htmlFor="sub_cat">Sub category</label>
-//                         <input type="text" ref={subcategory} className="form-control" id="sub_cat" />
-//                     </div>
-//                     <div className="col">
-//                         <label htmlFor="image">Image</label>
-//                         <input type="file" onChange={(e) => setImage(e.target.files[0])} className="form-control" id="image" />
-//                         <small style={{ color: "red" }}>{image === "" ? "Please select an image" : ""}</small>
-//                     </div>
-//                 </div>
-
-//                 <div className="row" style={{ padding: "16px 37px" }}>
-//                     <button className="btn btn-primary" onClick={saveCategory}>Save</button>
+//                 <div className="card-headding main-menu-headding">Category</div>
+//                 {/* <div className="errorMessage">{alertMessage}</div> */}
+//                 <div className="top-button">
+//                     <Link to="/addcategory"> <button className="btn-primary"> +Add</button></Link>
 //                 </div>
 //             </div>
-
+//             {/* <div className="content-div"> */}
+//             <div className="">
+//                 <table className="table-container table">
+//                     <thead>
+//                         <tr className="table-headding">
+//                             {
+//                                 tableHeadding.map((eachHeadding, id) =>
+//                                     <td key={id}>{eachHeadding.th}</td>
+//                                 )
+//                             }
+//                         </tr>
+//                     </thead>
+//                     <tbody>
+//                         {
+//                             categorys.map((category, id) =>
+//                                 <tr key={id} scope="row">
+//                                     <td>{category._id}</td>
+//                                     <td>{category.mainCategory}</td>
+//                                     <td>{category.category}</td>
+//                                     <td>{category.subCategory}</td>
+//                                     <td><img src={`http://localhost:5001/${category.image}`} alt="banner" className="bannerImg" /></td>
+//                                     <td>  <i className="bi bi-trash3-fill" id={category._id} onClick={deleteCategory}></i>  </td>
+//                                     <td>
+//                                         <Link to={`/categoryupdate/${category._id}`}>
+//                                             <i className="bi bi-pencil-square"  ></i>
+//                                         </Link>
+//                                     </td>
+//                                     {/* <td><i className="bi bi-pencil-square"></i> </td> */}
+//                                 </tr>
+//                             )
+//                         }
+//                     </tbody>
+//                 </table>
+//             </div>
 //         </div>
-//     )
+//     );
 // }
-// import React, { useRef, useState } from 'react';
-// import { ToastContainer, toast } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
 
 export const AddCategory = () => {
     const maincategory = useRef('');

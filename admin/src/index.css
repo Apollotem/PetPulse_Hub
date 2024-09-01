@@ -162,3 +162,20 @@ button.footer-btn {
 .gray-btn{
   background-color: #6c757d;
 }
+
+/* // */
+.flex {
+  display: flex;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.mr-2 {
+  margin-right: 0.5rem; /* Adjust as needed */
+}
+
+.ml-2 {
+  margin-left: 0.5rem; /* Adjust as needed */
+}

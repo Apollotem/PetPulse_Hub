@@ -18,9 +18,9 @@ export const Checkout = () => {
   const addressList = useSelector((state) => state.address.addressList)
   const imagePath=useSelector(state=>state.common.imagePath)
 
-  const userId = JSON.parse(localStorage.getItem("userId"));
+  const userId = localStorage.getItem("userId")
   const onCheckOut = () => {
-    const userId = JSON.parse(localStorage.getItem("userId"));
+    const userId = localStorage.getItem("userId")
     userId === null && navigate("/login");
     return userId;
   };

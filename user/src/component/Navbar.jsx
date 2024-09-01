@@ -157,7 +157,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setAuthId } from "../Slice/commonSlice";
 
 const Navbar = ({ onCartClick }) => {
-    const { totalItems } = useCart();
+
+    const { totalItems ,setItems} = useCart();
     const dispatch = useDispatch();
     const [isOpen, setIsOpen] = useState(false);
 
@@ -186,7 +187,8 @@ if(authId && !userId)
         localStorage.removeItem('userId');
         dispatch(setAuthId(null));
         console.log(userId);
-        
+        setItems([]);
+
         setUserId(null)
         // setAuthId(null); // Update local state
     };

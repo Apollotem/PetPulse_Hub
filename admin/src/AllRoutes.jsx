@@ -296,6 +296,7 @@ import Caretaker from "./pages/Caretaker.jsx";
 import UpdateProduct from "./pages/UpdateProduct.jsx";
 import UpdateBlog from "./pages/UpdateBlog.jsx";
 import { Login } from "./pages/Login.jsx";
+import Address from "./pages/Address.jsx";
 import { Categorydetails, AddCategory } from "./pages/Categorydetails";
 
 // Define your routes
@@ -305,6 +306,8 @@ const routerInfo = [
     { path: "/productdetails", component: <Product /> },
     { path: "/addproduct", component: <AddProduct /> },
     { path: "/orderdetails", component: <Order /> },
+    { path: "/addresses/:id", component: <Address /> },
+    // <Route path="/addresses/:id" element={<Address />} /> 
     { path: "/blogs", component: <Blogs /> },
     { path: "/categoryupdate/:categoryId", component: <UpdateCategory /> },
     { path: "/update/:productId", component: <UpdateProduct /> },

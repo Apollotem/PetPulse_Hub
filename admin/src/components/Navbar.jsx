@@ -24,13 +24,18 @@ const Navbar = () => {
                     menu: 'Product',
                     url: "/productdetails"
                 },
-                {
-                    menu: 'Caretaker',
-                    url: "/caretaking"
-                },
+               
                 {
                     menu: 'Order',
                     url: "/orderdetails"
+                },
+                {
+                    menu: 'Address',
+                    url: "/addressDetails"
+                },
+                {
+                    menu: 'Caretaker',
+                    url: "/caretaking"
                 },
                 {
                     menu: 'Blog',
