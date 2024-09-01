@@ -1,18 +1,24 @@
 import ButtonComponent from "../component/ButtonComponent"
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import Produtcard from "../component/Produtcard"
-import Quantitybtn from "../component/Quantitybtn";
-import { addToCart } from "../Slice/cartSlice"
+
+import RecomentedProduct from "../component/RecomentedProduct"
 import Notfound from "./Notfound";
 import "./CSS/productdetails.css"
-import Cart from "./Cart";
 const Productdetails = () => {
     const { productId } = useParams();
   const id = atob(productId);
-    const recomentedProduct = useSelector((state) => state.products.filteredProduct.filter(product => product._id !== id));
+  console.log(id);
+  
+    // const recomentedProduct = useSelector((state) => state.products.filteredProduct.filter(product => product._id !== id));
+    const recomentedProduct = useSelector((state) => 
+        [...state.products.filteredProduct.filter(product => product._id !== id)]
+    );
+    
+    console.log('Filtered Products:', recomentedProduct);
     const product = useSelector((state) => state.products.productList.find(product => product._id === id));
+    console.log("product",product);
+    
     const imgPath = useSelector((state) => state.common.imagePath)
 
     const productFeature = [
@@ -79,7 +85,7 @@ const Productdetails = () => {
             }
         </div>
             <h1 className="headding">Related products</h1>
-            <Produtcard products={recomentedProduct} headding="Our Top Food Items" />
+            <RecomentedProduct recomentedProducts={recomentedProduct} headding="Our Top Food Items" />
         </>
     );
 }

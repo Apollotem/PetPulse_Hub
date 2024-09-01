@@ -1,5 +1,5 @@
 // Filter.js
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { filterAndStore } from "../Slice/productSlice";
 import ReactSearchBox from "react-search-box";
@@ -7,6 +7,13 @@ import ReactSearchBox from "react-search-box";
 const Filter = () => {
     const dispatch = useDispatch();
     const product = useSelector((state) => state.products.filteredProduct);
+    const[prevFilteredProduct,setprevFilteredProduct]=useState([])
+    useEffect(()=>{
+        setprevFilteredProduct(product)
+       console.log("filter");
+       
+    },[])
+    // let prevFilteredProduct=product
     const [searchValue, setSearchValue] = useState("");
     const applyFilter = (e) => {
         const currentFilter = e.target.value;
@@ -26,7 +33,20 @@ const Filter = () => {
     };
     const handleSearchChange = (value) => {
         setSearchValue(value);
+    
+        if (value.trim() === "") {
+            // If the search box is cleared, reset to the original product list
+            dispatch(filterAndStore(prevFilteredProduct));
+        } else {
+            const filtered = product.filter((prod) =>
+                prod.name.toLowerCase().includes(value.toLowerCase())
+            );
+            console.log(filtered);
+            dispatch(filterAndStore(filtered)); // Dispatch filtered products to the Redux store
+        }
     };
+    
+
     const filteredProducts = product.filter((prod) =>
         prod.name.toLowerCase().includes(searchValue.toLowerCase())
     );

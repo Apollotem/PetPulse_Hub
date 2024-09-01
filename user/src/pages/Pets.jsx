@@ -91,7 +91,9 @@ const Pets = () => {
   const result = useSelector((state) => state.products.filteredProduct);
   const choosenCategory = useSelector((state) => state.categorys.clickedCategory);
   // Use useEffect to filter and dispatch products belonging to the "Pet" category
-
+  useEffect(()=>{
+    dispatch(setCategoryId(null))
+  },[])
   useEffect(() => {
     const filteredProduct = products.filter(product =>
       categorys.some(category => category._id === product.category_id && category.mainCategory === "Pet")

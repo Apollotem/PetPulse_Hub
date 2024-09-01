@@ -91,6 +91,7 @@ import Footer from "./component/Footer";
 import { fetchAndStore } from "./Slice/productSlice";
 import { fetchAndStoreCategory } from "./Slice/categorySlice";
 import { httpRequest } from "./API/api";
+import { useLocation } from "react-router-dom";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -154,14 +155,16 @@ const App = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isCartVisible]);
-
+  const noCommonComponents = ['/login','/signup'];
+  const location = useLocation();
   return (
     <>
       <div className={isCartVisible ? "main-content blurred" : "main-content"}>
-        <Navbar onCartClick={toggleCartVisibility} />
-        <AllRouter />
-        <Footer />
+      {!noCommonComponents.includes(location.pathname) && <Navbar onCartClick={toggleCartVisibility} />}
+
         
+        <AllRouter />
+        {!noCommonComponents.includes(location.pathname) &&  <Footer />}
         <div className="chatbot-icon" onClick={handleChatbotClick}>
           <img src="./images/ai.png" alt="chatbot" />
         </div>
