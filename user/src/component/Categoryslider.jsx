@@ -26,6 +26,9 @@ const Categoryslider = ({ categorys, headding }) => {
       }
     };
   }, []);
+  useEffect(()=>{
+    dispatch(setCategoryId(null))
+  },[])
 
   const scrollLeft = () => {
     const newPosition = scrollPosition - containerRef.current.offsetWidth / 2;

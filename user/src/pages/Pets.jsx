@@ -82,6 +82,7 @@ import Produtcard from "../component/Produtcard";
 import "../component/CSS/Card.css";
 import { filterAndStore } from "../Slice/productSlice";
 import { useEffect } from "react";
+import {setCategoryId} from "../Slice/categorySlice"
 
 const Pets = () => {
   const dispatch = useDispatch();
@@ -89,8 +90,8 @@ const Pets = () => {
   const products = useSelector((state) => state.products.productList);
   const result = useSelector((state) => state.products.filteredProduct);
   const choosenCategory = useSelector((state) => state.categorys.clickedCategory);
-
   // Use useEffect to filter and dispatch products belonging to the "Pet" category
+
   useEffect(() => {
     const filteredProduct = products.filter(product =>
       categorys.some(category => category._id === product.category_id && category.mainCategory === "Pet")
