@@ -138,6 +138,7 @@ const App = () => {
   const toggleCartVisibility = () => {
     setCartVisible(!isCartVisible); // Toggle cart visibility
   };
+  
 
   const handleClickOutside = (event) => {
     if (cartRef.current && !cartRef.current.contains(event.target)) {
@@ -178,16 +179,21 @@ const App = () => {
           </div>
         )}
       </div>
-
       {isCartVisible && (
+  <div className="cart-overlay">
+    <div className="cart-content" ref={cartRef}>
+      <Cart callbackShowCart={toggleCartVisibility} />
+    </div>
+  </div>
+)}
+
+      {/* {isCartVisible && (
         <div className="cart-overlay">
           <div className="cart-content" ref={cartRef}>
             <Cart callbackShowCart={toggleCartVisibility} />
-            {/* <Cart callbackShowCart={toggleCartVisibility} /> */}
-
           </div>
         </div>
-      )}
+      )} */}
     </>
   );
 }

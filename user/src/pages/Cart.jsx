@@ -24,11 +24,10 @@ const Cart = ({ callbackShowCart }) => {
     callbackShowCart()
   }
   const handleShow = () => {
-    setCartVisible(!cartIsVisible)
+    setCartVisible(!cartIsVisible);
     callbackShowCart(); // Trigger the parent component to close the cart and remove opacity
-
-    // history(-1);
-  }
+  };
+  
   return (
     <>
 
@@ -46,7 +45,7 @@ const Cart = ({ callbackShowCart }) => {
             isEmpty &&
             (<div className="emptyCartContainer product-headding" style={{padding: "69px 73px"}}>
               {/* Your cart is empty */}
-              <img src="images/noItem.png" alt="" />
+              <img src="images/noItem.png" alt="img" />
             </div>)
           }
           {items.map((product, key) => {

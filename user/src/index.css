@@ -270,6 +270,10 @@ img {
 }
 
 
+.main-content.blurred {
+  opacity: 0.3; /* Reduce opacity when blurred */
+  pointer-events: none; /* Prevent interaction when blurred */
+}
 
 .right-image img {
   max-width: 200px; /* Limit the size of the image */

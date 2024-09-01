@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const Caretaker = () => {
   const [isPetType, setPetType] = useState(false);
-  const userId = JSON.parse(localStorage.getItem("userId"));
+  const userId = localStorage.getItem("userId")
 
   // Refs for input fields
   const dropRef = useRef(null);
