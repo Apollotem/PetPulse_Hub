@@ -27,6 +27,9 @@ const Filter = () => {
         } else if (currentFilter === "ZtoA") {
             sortedData = product.slice().sort((a, b) => b.name.localeCompare(a.name));
         }
+        else{
+            sortedData=product
+        }
         console.log(sortedData);
         
         dispatch(filterAndStore(sortedData));

@@ -196,7 +196,8 @@ const AddProduct = () => {
                         position: 'top-right',
                         autoClose: 3000,
                     });
-                    setProductList(prevDetails => prevDetails.filter(product => product._id !== product_id));
+                    // setProductList(prevDetails => prevDetails.filter(product => product._id !== product_id));
+                    resetValues()
                 } else {
                     toast.error(res.message, {
                         position: 'top-right',

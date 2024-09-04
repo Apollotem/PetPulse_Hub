@@ -47,7 +47,7 @@ const Produtcard = ({ categorys, headding }) => {
   return (
     <div className="topSpacing">
       {/* <Filter /> */}
-      <div className="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-4 g-4" style={{ margin: "10px 0px" }}>
+      <div className="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-4 g-4" style={{ margin: "45px 0px" }}>
         {products.map((product, index) => (
           <div className="col-6 col-sm-6 col-md-4 col-lg-3" key={index}>
             <Link to={`/productdetails/${btoa(product._id.toString())}`} className="card-link">

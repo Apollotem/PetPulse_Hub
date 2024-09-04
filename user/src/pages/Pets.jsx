@@ -83,6 +83,7 @@ import "../component/CSS/Card.css";
 import { filterAndStore } from "../Slice/productSlice";
 import { useEffect } from "react";
 import {setCategoryId} from "../Slice/categorySlice"
+import Filter from "../component/Filter";
 
 const Pets = () => {
   const dispatch = useDispatch();
@@ -113,12 +114,18 @@ const Pets = () => {
   return (
     <>
       <Categoryslider categorys={filterCategory} />
+      {/* <Filter/> */}
    { result.length===0 
    ?<div className="noProduct" style={{    "padding": "98px 543px"}}>
     <img src="images/no-product.png" alt="no-product" />
    </div>
 
-   : <Produtcard categorys={filterCategory} headding="Our Pets" />}
+   :
+   <>
+  
+    <Produtcard categorys={filterCategory} headding="Our Pets" />
+   </>
+   }
     </>
   );
 };

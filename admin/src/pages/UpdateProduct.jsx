@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { httpRequest } from "../API/api"
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 const UpdateProduct = () => {
     const {productId} = useParams()
     const prodcutName = useRef('');
@@ -11,6 +11,7 @@ const UpdateProduct = () => {
     const [categoryId, setCategoryId] = useState('');
     const [categoryList, setCategoryList] = useState([]);
     const [message, setMessage] = useState("");
+    const navigate=useNavigate()
     const showMessage = (msg) => {
         setMessage(msg);
         setTimeout(() => setMessage(""), 3000)
@@ -76,13 +77,14 @@ const UpdateProduct = () => {
             .then((response) => {
                 showMessage(response.message);
                 resetValues();
+                navigate("/productdetails")
             })
             .catch((err) => console.log(err));
     }
     return (
         <div className="content-div">
             <div className="card-header">
-                <div className="card-headding">Update Product </div>
+                <div className="card-headding main-menu-headding">Update Product </div>
                 <div className="errorMessage">{message}</div>
             </div>
             <div className="table-container">
