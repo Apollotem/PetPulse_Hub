@@ -236,8 +236,8 @@ const Orders = () => {
                       </div>
                       {(order.order_message !== "Order Canceled") && (
                         <div className="address-right">
-                          <div className="address-heading mediumfont">More actions</div>
-                          <div className="desc"><button>Download Invoice</button></div>
+                          {/* <div className="address-heading mediumfont">More actions</div>
+                          <div className="desc"><button>Download Invoice</button></div> */}
                         </div>
                       )}
                     </div>

@@ -135,7 +135,7 @@ const Order = () => {
     const [filters, setFilters] = useState({
         global: { value: null, matchMode: 'contains' }, // Adjust as needed
     });
-    const [rowsPerPage, setRowsPerPage] = useState(10); // Default rows per page
+    const [rowsPerPage, setRowsPerPage] = useState(5); // Default rows per page
 
     useEffect(() => {
         fetchOrders();
@@ -281,7 +281,7 @@ const Order = () => {
                             <option value="Shipped">Shipped</option>
                             <option value="Out For Deliver">Out For Deliver</option>
                             <option value="Delivered">Delivered</option>
-                            <option value="Order Cancel">Order Cancel</option> {/* Add this option */}
+                            {/* <option value="Order Cancel">Order Cancel</option> Add this option */}
                         </select>
                     </div> 
                     <hr />

@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import { httpRequest } from "../API/api";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {useNavigate} from "react-router-dom"
 
 const Caretaker = () => {
   const [isPetType, setPetType] = useState(false);
@@ -125,6 +126,7 @@ const Caretaker = () => {
     return true;
   };
 
+  const navigate=useNavigate()
   // Function to handle form submission
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent default form submission
@@ -159,6 +161,10 @@ const Caretaker = () => {
             position: 'top-right',
             autoClose: 3000,
           });
+          setTimeout(() => {
+            navigate('/caretakingstatus');
+          }, 3000);
+
         } else {
           toast.error("Request was not sent. Please try again", {
             position: 'top-right',

@@ -2,7 +2,7 @@ import React,{ useEffect, useState } from "react";
 import { httpRequest } from "../API/api";
 import { useSelector } from 'react-redux';
 const CaretakingStatus = () => {
-    const userId = JSON.parse(localStorage.getItem("userId"));
+    const userId = localStorage.getItem("userId")
     const [caretakingList, setCaretakingList] = useState([]);
     const [expandedRowId, setExpandedRowId] = useState(null);
 const imagePath=useSelector(state=>state.common.imagePath)

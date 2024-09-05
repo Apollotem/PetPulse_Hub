@@ -79,7 +79,7 @@ const Caretaker = () => {
     const [filters, setFilters] = useState({
         global: { value: null, matchMode: 'contains' }
     });
-    const [rowsPerPage, setRowsPerPage] = useState(10); // Default rows per page
+    const [rowsPerPage, setRowsPerPage] = useState(5); // Default rows per page
 
     useEffect(() => {
         httpRequest('get', "api/user/getallCaretaking").then((res) => {
@@ -90,10 +90,21 @@ const Caretaker = () => {
     }, []);
 
     const changeToReject = (id) => {
-        const confirmDelete = window.confirm('Are you sure you want to delete this item?');
-
+        const confirmDelete = window.confirm('Are you sure you want to delete this Request?');
         if (confirmDelete) {
             httpRequest('post', "api/user/updateCaretakeStatus", { id: id, status: "Rejected" })
+                .then((res) => {
+                    if (res.status === "success") {
+                        let updatedList = caretakingList.map(data => data._id === id ? { ...data, status: "Rejected" } : data);
+                        setCaretakingList(updatedList);
+                    }
+                });
+        }
+    };
+    const ChangeToApproved = (id) => {
+        const confirmDelete = window.confirm('Are you sure you want to Approve this Request?');
+        if (confirmDelete) {
+            httpRequest('post', "api/user/updateCaretakeStatus", { id: id, status: "Approved" })
                 .then((res) => {
                     if (res.status === "success") {
                         let updatedList = caretakingList.map(data => data._id === id ? { ...data, status: "Rejected" } : data);
@@ -153,14 +164,28 @@ const Caretaker = () => {
                 <Column field="deliver" header="Deliver" />
                 <Column field="hostel" header="Hostel" />
                 <Column field="address" header="Address" />
-                <Column
-                    header="Action"
+                
+                     <Column
+                    header="Status"
                     body={(rowData) => (
-                        <button className="btn-primary" onClick={() => changeToReject(rowData._id)}>
+                        (rowData.status!=="Approved" && rowData.status!=="Canceled") ? <button className="btn-primary" onClick={() => changeToReject(rowData._id)}>
                             {rowData.status}
-                        </button>
+                            {/* {rowData.status!=="Approved"&& "Approved"} */}
+                        </button>:"Approved"
                     )}
                 />
+            
+            <Column
+                header="Action"
+                body={(rowData) => (
+                    (rowData.status==="Applied") ?
+                    <button className="" onClick={() => ChangeToApproved(rowData._id)}>
+                         Approved
+                    </button>
+                    :""
+                )}
+            />
+                
             </DataTable>
         </div>
     );

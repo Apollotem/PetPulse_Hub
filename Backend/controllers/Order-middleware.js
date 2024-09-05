@@ -92,7 +92,7 @@ export const validatePaymentStatus = async (req, res) => {
             {
                 $set: {
                     status: "success",
-                    order_message: "Payment success"
+                    order_message: "Order Placed"
                 }
             },
             { new: true }

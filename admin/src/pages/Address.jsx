@@ -96,7 +96,7 @@ const Address = () => {
                     <Column field="name" header="Name" />
                     <Column field="mobileNo" header="Mobile No" body={rowData => rowData.mobileNo || 'N/A'} />
                     <Column field="address" header="Address" />
-                    <Column field="order_id" header="Order ID" body={rowData => rowData.order_id || 'N/A'} />
+                    {/* <Column field="order_id" header="Order ID" body={rowData => rowData.order_id || 'N/A'} /> */}
                 </DataTable>
             )}
         </div>
