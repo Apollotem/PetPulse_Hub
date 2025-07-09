@@ -2,7 +2,8 @@ import { useRef } from "react";
 import { useNavigate } from "react-router";
 import { httpRequest } from "../API/api.js"
 import "./CSS/Login.css"
-export const Login = () => {
+
+export default function Login() {
   const navigate = useNavigate()
   const emailRef = useRef(null)
   const passwordRef = useRef(null)

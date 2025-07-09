@@ -102,7 +102,7 @@ import { useRef, useState, useEffect } from "react";
 import { httpRequest } from "../API/api";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-export const UpdateCategory = () => {
+export default function UpdateCategory() {
     const { categoryId } = useParams(); // Correct way to extract params
     const maincategory = useRef(null); // Initialize refs with null
     const category = useRef(null);
