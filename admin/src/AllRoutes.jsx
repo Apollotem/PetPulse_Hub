@@ -19,7 +19,7 @@ import Caretaker from './pages/Caretaker';
 import UpdateProduct from './pages/UpdateProduct';
 import UpdateBlog from './pages/UpdateBlog';
 import Address from './pages/Address';
-import { Categorydetails as CategoryDetailsComponent, AddCategory as AddCategoryComponent } from './pages/Categorydetails';
+import CategoryList from './pages/CategoryList';
 
 // Define public routes (no authentication required)
 const publicRoutes = [
@@ -34,12 +34,22 @@ const privateRoutes = [
   { path: '/orderdetails', component: Order },
   { path: '/addresses/:id', component: Address },
   { path: '/blogs', component: Blogs },
-  { path: '/categoryupdate/:categoryId', component: UpdateCategory },
+  // Product routes
   { path: '/update/:productId', component: UpdateProduct },
+  
+  // Blog routes
   { path: '/updateblog/:blogId', component: UpdateBlog },
   { path: '/addblog', component: Addblog },
-  { path: '/category', component: CategoryDetailsComponent },
-  { path: '/addcategory', component: AddCategoryComponent },
+  
+  // Category routes
+  { path: '/categories', component: CategoryList },
+  { path: '/categories/add', component: UpdateCategory },
+  { path: '/categories/edit/:categoryId', component: UpdateCategory },
+  
+  // Legacy category routes (redirects)
+  { path: '/category', element: <Navigate to="/categories" replace /> },
+  { path: '/addcategory', element: <Navigate to="/categories/add" replace /> },
+  { path: '/categoryupdate/:categoryId', element: <Navigate to="/categories/edit/:categoryId" replace /> },
   { path: '/gallery', component: Gallery },
   { path: '/caretaking', component: Caretaker },
   { path: '*', component: Notfound },
