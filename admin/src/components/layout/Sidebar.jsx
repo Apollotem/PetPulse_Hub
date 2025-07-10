@@ -32,8 +32,7 @@ const menuItems = [
     path: '/categories',
     icon: <FaListAlt className="w-5 h-5" />,
     submenu: [
-      { title: 'All Categories', path: '/categories' },
-      { title: 'Add New', path: '/categories/add' }
+      { title: 'All Categories', path: '/categories' }
     ]
   },
   { 
