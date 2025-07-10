@@ -108,11 +108,15 @@ const CategoryForm = ({ isEdit = false }) => {
       
       if (isEdit && categoryId) {
         formDataToSend.append('categoryId', categoryId);
-        await httpRequest('post', 'api/category/update', formDataToSend);
-        toast.success('Category updated successfully!');
-      } else {
-        await httpRequest('post', 'api/category/add', formDataToSend);
-        toast.success('Category created successfully!');
+        const response = await httpRequest('post', 'api/category/updateCategory', formDataToSend);
+        if (response.status === 'success') {
+          toast.success('Category updated successfully!');
+        } else {
+          const response = await httpRequest('post', 'api/category/add', formDataToSend);
+          if (response.status === 'success') {
+            toast.success('Category created successfully!');
+          }
+        }
       }
       
       navigate('/category');

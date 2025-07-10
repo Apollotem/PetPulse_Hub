@@ -110,7 +110,12 @@ const CategoryList = () => {
           data={categories}
           loading={loading}
           emptyMessage="No categories found. Add your first category to get started."
-          onRowClick={(row) => navigate(`/update-category/${row._id}`)}
+          onRowClick={(row, e) => {
+            // Only navigate if the click wasn't on a button or anchor
+            if (!e.target.closest('button, a')) {
+              navigate(`/update-category/${row._id}`);
+            }
+          }}
           rowClassName="hover:bg-gray-50 cursor-pointer"
         />
       </Card>

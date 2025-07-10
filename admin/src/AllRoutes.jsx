@@ -43,13 +43,13 @@ const privateRoutes = [
   
   // Category routes
   { path: '/categories', component: CategoryList },
-  { path: '/categories/add', component: UpdateCategory },
-  { path: '/categories/edit/:categoryId', component: UpdateCategory },
+  { path: '/add-category', component: UpdateCategory },
+  { path: '/update-category/:categoryId', component: UpdateCategory },
   
   // Legacy category routes (redirects)
   { path: '/category', element: <Navigate to="/categories" replace /> },
-  { path: '/addcategory', element: <Navigate to="/categories/add" replace /> },
-  { path: '/categoryupdate/:categoryId', element: <Navigate to="/categories/edit/:categoryId" replace /> },
+  { path: '/addcategory', element: <Navigate to="/add-category" replace /> },
+  { path: '/categoryupdate/:categoryId', element: <Navigate to="/update-category/:categoryId" replace /> },
   { path: '/gallery', component: Gallery },
   { path: '/caretaking', component: Caretaker },
   { path: '*', component: Notfound },
@@ -102,8 +102,17 @@ export const AllRoutes = () => {
   );
 
   // Create route elements with proper layout
-  const renderRouteElement = (Component, isPublic = false) => {
-    const element = <Component />;
+  const renderRouteElement = (route, isPublic = false) => {
+    // Handle both component and element properties
+    let element;
+    if (route.element) {
+      element = route.element;
+    } else if (route.component) {
+      element = <route.component />;
+    } else {
+      console.error('Route is missing both element and component properties:', route);
+      return null;
+    }
     
     if (isPublic) {
       return <PublicRoute>{element}</PublicRoute>;
@@ -125,7 +134,7 @@ export const AllRoutes = () => {
         <Route
           key={`public-${index}`}
           path={route.path}
-          element={renderRouteElement(route.component, true)}
+          element={renderRouteElement(route, true)}
         />
       ))}
 
@@ -134,7 +143,7 @@ export const AllRoutes = () => {
         <Route
           key={`private-${index}`}
           path={route.path}
-          element={renderRouteElement(route.component, false)}
+          element={renderRouteElement(route, false)}
         />
       ))}
     </Routes>
