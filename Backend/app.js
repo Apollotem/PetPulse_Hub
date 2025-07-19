@@ -9,6 +9,7 @@ import productRouter from "./routes/product-routers.js";
 import orderRouteer from "./routes/order-router.js";
 import addressRouter from "./routes/address-routers.js";
 import dashboardRouter from "./routes/dashboard-routes.js";
+import notificationRouter from "./routes/notification-routes.js";
 import Razorpay from "razorpay"
 // import crypto from "crypto"
 import cors from "cors";
@@ -42,6 +43,7 @@ app.use("/api/admin", adminRouter);
 app.use("/api/order", orderRouteer);
 app.use("/api/address", addressRouter);
 app.use("/api/dashboard", dashboardRouter);
+app.use("/api/notifications", notificationRouter);
 
 
 

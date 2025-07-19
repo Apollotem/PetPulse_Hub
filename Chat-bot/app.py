@@ -1,4 +1,6 @@
 import os
+import hashlib
+from functools import lru_cache
 from flask import Flask, render_template, request, jsonify
 from dotenv import load_dotenv
 import google.generativeai as genai
@@ -35,6 +37,21 @@ def index():
     return render_template('index.html', initial_message="Hello! I'm your PetPulse Hub assistant. How can I help you today?")
 
 
+# Initialize a simple in-memory cache
+response_cache = {}
+
+def get_cache_key(message: str) -> str:
+    """Generate a consistent cache key for similar messages"""
+    # Normalize the message by lowercasing and removing extra whitespace
+    normalized = ' '.join(message.lower().split())
+    # Create a hash of the normalized message for consistent key generation
+    return hashlib.md5(normalized.encode()).hexdigest()
+
+def get_cached_response(message: str) -> tuple:
+    """Get response from cache if exists, return (response, is_cached)"""
+    cache_key = get_cache_key(message)
+    return response_cache.get(cache_key), cache_key in response_cache
+
 @app.route('/chat', methods=['POST']) 
 def chat():
     try:
@@ -42,6 +59,26 @@ def chat():
             return jsonify({'error': 'No message provided'}), 400
         
         user_message = request.json['message']
+        message_hash = get_cache_key(user_message)
+        
+        # Check cache first
+        cached_response, is_cached = get_cached_response(user_message)
+        if is_cached:
+            # If we have a cached response, use it
+            if 'history' not in request.json or not request.json['history']:
+                # If it's a new conversation, create history with just the response
+                history = [
+                    {"role": "model", "parts": ["I understand I'm here to help with PetPulse Hub. How can I assist you today?"]}
+                ]
+            else:
+                # Otherwise use the provided history
+                history = request.json['history']
+                
+            return jsonify({
+                'response': cached_response,
+                'history': request.json.get('history', []),
+                'cached': True
+            })
         
         # System prompt to guide the AI's responses
         system_prompt = """
@@ -83,10 +120,14 @@ def chat():
             {"role": "model", "parts": [response.text]}
         ])
         
+        # Cache the response
+        response_cache[get_cache_key(user_message)] = response.text
+        
         # Return response and updated history
         return jsonify({
             'response': response.text,
-            'history': serialized_history
+            'history': serialized_history,
+            'cached': False
         })
         
     except Exception as e:

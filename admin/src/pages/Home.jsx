@@ -57,7 +57,7 @@ const RecentActivity = ({ title, items, type }) => (
                                 <div>
                                     <div className="d-flex justify-content-between">
                                         <span><strong>Order #{item._id.slice(-6)}</strong></span>
-                                        <span>₹{item.totelamount}</span>
+                                        <span>₹{item.totelamount / 100}</span>
                                     </div>
                                     <div className="text-muted small">
                                         {item.userId?.name || 'Guest'}
@@ -193,7 +193,7 @@ const Home = () => {
             <div className="row mb-4">
                 <StatCard 
                     title="Total Revenue" 
-                    value={`₹${stats?.totalRevenue || '0'}`} 
+                    value={`₹${stats?.totalRevenue / 100 || '0'}`} 
                     icon="dollar-sign" 
                     color="#4e73df"
                 />
